@@ -33,21 +33,44 @@
                 <input type="file" id="img" name="img">
             </form>
         </div>
+
         <div class="cv-box">
             <div class="cv-box__title">
                 <h2 class="cv-box__title-title">Doświadczenie zawodowe</h2>
             </div>
+            <div class="button-box">
+                <button class="button">+</button>
+            </div>
             <form action="">
-                <label for="name">Imię:</label>
-                <input type="text" id="name" name="name" placeholder="Jan">
-                <label for="last-name">Nazwisko:</label>
-                <input type="text" id="last-name" name="last-name" placeholder="Kowalski">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" placeholder="jan.kowalski@gmail.com">
-                <label for="tel">Tel:</label>
-                <input type="number" id="tel" name="tel" placeholder="500-500-500">
-                <label for="img">Zdjęcie:</label>
-                <input type="file" id="img" name="img">
+                <label for="company">Firma:</label>
+                <input type="text" id="company" name="company" placeholder="Company name">
+                <label for="job-title">Stanowisko:</label>
+                <input type="text" id="job-title" name="job-title" placeholder="Senior specjalist ">
+                <label for="job-start">Od:</label>
+                <input type="month" id="job-start" name="job-start">
+                <label for="job-end">Do:</label>
+                <input type="month" id="job-end" name="job-end">
+                <label for="job-description">Opis:</label>
+                <textarea name="job-description" id="job-description"></textarea>
+            </form>
+        </div>
+
+        <div class="cv-box">
+            <div class="cv-box__title">
+                <h2 class="cv-box__title-title">Edukacja</h2>
+            </div>
+            <div class="button-box">
+                <button class="button">+</button>
+            </div>
+            <form action="">
+                <label for="school">Szkoła/Uczelnia</label>
+                <input type="text" id="school" name="school">
+                <label for="degree">Kierunek/Stopień:</label>
+                <input type="text" id="degree" name="degree">
+                <label for="edu-start">Od:</label>
+                <input type="month" id="edu-start" name="edu-start">
+                <label for="edu-end">Do:</label>
+                <input type="month" id="edu-end" name="edu-end">
             </form>
         </div>
 
