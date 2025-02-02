@@ -1,0 +1,15 @@
+@use 'base/colors' as *;
+.cv-box {
+	padding: 1em 0.5em;
+	display: flex;
+	flex-direction: column;
+
+	&__title {
+        padding: 0.5em;
+		font-size: 2.2rem;
+		text-align: center;
+		text-transform: uppercase;
+		background-color: $accent;
+        color: $white;
+	}
+}

@@ -1,3 +1,4 @@
+@use 'base/colors' as *;
 *,
 *::after,
 *::before {
@@ -11,7 +12,40 @@ html {
 }
 
 body {
-	font-family: "Poppins", serif;
+	font-family: 'Poppins', serif;
 	font-size: 1.6rem;
 	height: 100vh;
+}
+
+.container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 1400px;
+}
+form {
+	padding: 1em;
+	background-color: $gray;
+	display: flex;
+	flex-direction: column;
+}
+label {
+	font-size: 2rem;
+	margin-top: 10px;
+}
+input {
+	margin-top: 10px;
+	height: 2em;
+	font-size: 1.8rem;
+}
+
+@media (max-width: 798px) {
+	label {
+		font-size: 1.8rem;
+		margin-top: 10px;
+	}
+	input {
+		margin-top: 10px;
+		height: 2em;
+		font-size: 1.5rem;
+	}
 }
