@@ -3,6 +3,7 @@ const jobBtn = document.querySelector('.job-button')
 const eduBtn = document.querySelector('.edu-button')
 const langBtn = document.querySelector('.language-button')
 
+
 // Funkcja generująca nowy formularz dla doświadczenia zawodowego
 const createJob = () => {
 	const cvBoxJob = document.querySelector('.cv-box-job')
@@ -23,6 +24,7 @@ const createJob = () => {
 		const label = document.createElement('label')
 		label.setAttribute('for', field.id)
 		label.textContent = field.label
+		
 
 		let input
 		if (field.type === 'textarea') {
@@ -38,6 +40,11 @@ const createJob = () => {
 		input.setAttribute('name', field.name)
 		jobForm.append(label, input)
 	})
+	
+	const deleteBtn = document.createElement('button')
+	deleteBtn.classList.add('delete')
+	deleteBtn.textContent = 'Usuń'
+	jobForm.append(deleteBtn)
 	cvBoxJob.append(jobForm)
 }
 // Funkcja generująca nowy formularz dla edukacji
@@ -72,6 +79,10 @@ const createEdu = () => {
 		input.setAttribute('name', field.name)
 		eduForm.append(label, input)
 	})
+	const deleteBtn = document.createElement('button')
+	deleteBtn.classList.add('delete')
+	deleteBtn.textContent = 'Usuń'
+	eduForm.append(deleteBtn)
 	cvBoxEdu.append(eduForm)
 }
 // Funkcja generująca nowy formularz dla poziomu języka
@@ -101,6 +112,10 @@ const createLanguage = () => {
 		input.setAttribute('name', field.name)
 		langForm.append(label, input)
 	})
+	const deleteBtn = document.createElement('button')
+	deleteBtn.classList.add('delete')
+	deleteBtn.textContent = 'Usuń'
+	langForm.append(deleteBtn)
 	cvBoxLang.append(langForm)
 }
 
