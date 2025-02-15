@@ -1,15 +1,56 @@
 @use 'base/colors' as *;
 .cv-box {
-	padding: 1em 0.5em;
 	display: flex;
 	flex-direction: column;
+	padding: 0 0.5em;
 
 	&__title {
-        padding: 0.5em;
+		padding: 0.5em;
 		font-size: 2.2rem;
 		text-align: center;
 		text-transform: uppercase;
 		background-color: $accent;
-        color: $white;
+		color: $white;
 	}
+}
+.box-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: $accent;
+	margin: 0 0.5em;
+	height: 100px;
+}
+.btn {
+	text-transform: uppercase;
+	width: 100%;
+	padding: 1.2em;
+	font-size: 1.6rem;
+}
+
+.cv-preview {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr 1fr 1fr;
+	margin: 2.5em 0.5em;
+}
+.cv-preview-about {
+	grid-column: 1/1;
+	grid-row: 1/-1;
+	background: $gray;
+}
+.img-preview-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1em;
+}
+.img-preview {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+.cv-preview-title {
+	text-align: center;
 }

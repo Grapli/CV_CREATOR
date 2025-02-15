@@ -16,7 +16,7 @@
 
 <body>
     <div class="container">
-        <div class="cv-box">
+        <div class="cv-box cv-box-about">
             <div class="cv-box__title">
                 <h2 class="cv-box__title-title">Dane osobowe</h2>
             </div>
@@ -41,7 +41,7 @@
             <div class="button-box">
                 <button class="button job-button">+</button>
             </div>
-            <!-- <form class="job-form" action="">
+            <form class="job-form" action="">
                 <label for="company">Firma:</label>
                 <input type="text" id="company" name="company" placeholder="IT Software house">
                 <label for="job-title">Stanowisko:</label>
@@ -52,7 +52,7 @@
                 <input type="month" id="job-end" name="job-end">
                 <label for="job-description">Opis:</label>
                 <textarea name="job-description" id="job-description"></textarea>
-            </form> -->
+            </form>
         </div>
 
         <div class="cv-box cv-box-edu">
@@ -62,7 +62,7 @@
             <div class="button-box">
                 <button class="button edu-button">+</button>
             </div>
-            <!-- <form class="edu-form" action="">
+            <form class="edu-form" action="">
                 <label for="school">Szkoła/Uczelnia</label>
                 <input type="text" id="school" name="school">
                 <label for="degree">Kierunek/Stopień:</label>
@@ -71,8 +71,8 @@
                 <input type="month" id="edu-start" name="edu-start">
                 <label for="edu-end">Do:</label>
                 <input type="month" id="edu-end" name="edu-end">
-                  <button class="delete">Usuń</button>
-            </form> -->
+                <button class="delete">Usuń</button>
+            </form>
         </div>
 
         <div class="cv-box cv-box-skills">
@@ -82,10 +82,10 @@
             <div class="button-box">
                 <button class="button skills-button">+</button>
             </div>
-            <!-- <form action="" class="skills-form">
+            <form action="" class="skills-form">
                 <label for="skills">Umiętności:</label>
                 <input type="text" id="skills" name="skills" placeholder="HTML,CSS,JAVASCRIPT">
-            </form> -->
+            </form>
         </div>
 
         <div class="cv-box cv-box-lang">
@@ -95,17 +95,36 @@
             <div class="button-box">
                 <button class="button language-button">+</button>
             </div>
-            <!-- <form class="language-form" action="">
+            <form class="language-form" action="">
                 <label for="language">Umiętności:</label>
                 <input type="text" id="language" name="language" placeholder="Angielski">
                 <label for="level"></label>
                 <input type="text" id="level" name="level" placeholder="C1">
                 <button class="delete">Usuń</button>
-            </form> -->
+            </form>
         </div>
+        <div class="box-buttons">
+            <button class="button btn">Generuj</button>
+            <button class="button btn">Usuń wszystko</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="cv-preview">
 
+            <div class="cv-preview-about">
+                <div class="img-preview-box">
+                    <img class="img-preview" src="/dist/img/happy-1836445_640.jpg" alt="">
+                </div>
+                <h2 class="cv-preview-title">Dane osobowe:</h2>
+                <p class="preview">Imię i Nazwisko:</p>
+                <p class="name-preview left">Arkadiusz Piotrowicz</p>
+                <p class="preview">Email:</p>
+                <p class="email-preview left">arekpiotrowicz@gmail.com</p>
+                <p class="preview">Telefon:</p>
+                <p class="tel-preview left">400-529-420</p>
 
-
+            </div>
+        </div>
 
     </div>
     <script src="/dist/js/main.min.js"></script>
