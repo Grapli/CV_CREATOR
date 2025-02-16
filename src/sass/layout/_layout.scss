@@ -34,6 +34,7 @@
 	grid-template-rows: 1fr 1fr 1fr;
 	margin: 2.5em 0.5em;
 }
+// about
 .cv-preview-about {
 	grid-column: 1/1;
 	grid-row: 1/-1;
@@ -52,5 +53,22 @@
 	object-fit: cover;
 }
 .cv-preview-title {
+	margin-left: 0.5em;
 	text-align: center;
+}
+// job
+.cv-preview-job {
+	grid-column: 2/-1;
+	margin-left: 5px;
+}
+.preview-job-box{
+	margin: 0.3em 0;
+}
+.preview-job-date {
+	display: flex;
+	margin-top: 0.2em;
+}
+.preview-job-description {
+	text-align: left;
+	margin-top: 0.2em;
 }

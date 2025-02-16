@@ -3,7 +3,23 @@ const jobBtn = document.querySelector('.job-button')
 const eduBtn = document.querySelector('.edu-button')
 const langBtn = document.querySelector('.language-button')
 const skillBtn = document.querySelector('.skills-button')
+const userName = document.querySelector('.name-preview')
+const userEmail = document.querySelector('.email-preview')
+const userTel = document.querySelector('.tel-preview')
 
+const generateUserDataAbout = () => {
+	const formName = document.querySelector('#name')
+	const formLastName = document.querySelector('#last-name')
+	userName.textContent = formName.value + " " + formLastName.value
+
+	const formEmail = document.querySelector('#email')
+	userEmail.textContent = formEmail.value
+
+	const formTel = document.querySelector('#tel')
+	userTel.textContent = formTel.value
+
+}
+generateUserDataAbout()
 // Funkcja generująca nowy formularz dla doświadczenia zawodowego
 const createJob = () => {
 	const cvBoxJob = document.querySelector('.cv-box-job')
@@ -123,8 +139,8 @@ const createLanguage = () => {
 	deleteBtn.classList.add('delete')
 	deleteBtn.textContent = 'Usuń'
 	deleteBtn.addEventListener('click', e => {
-		e.preventDefault() 
-		langForm.remove() 
+		e.preventDefault()
+		langForm.remove()
 	})
 	langForm.append(deleteBtn)
 	cvBoxLang.append(langForm)
