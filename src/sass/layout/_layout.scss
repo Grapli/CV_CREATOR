@@ -33,6 +33,7 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: 1fr 1fr 1fr;
 	margin: 2.5em 0.5em;
+	border: 1px solid $accent;
 }
 // about
 .cv-preview-about {
