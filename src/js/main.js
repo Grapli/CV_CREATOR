@@ -161,7 +161,6 @@ const generateUserDataAbout = () => {
 	const formTel = document.querySelector('#tel')
 	userTel.textContent = formTel.value
 }
-generateUserDataAbout()
 
 const generateUserJob = () => {
 	const previewJob = document.querySelector('.cv-preview-job')
@@ -203,9 +202,40 @@ const generateUserJob = () => {
 		previewJob.append(jobBox)
 	})
 }
+const generateUserLang = () => {
+	const previewLang = document.querySelector('.cv-preview-lang')
+
+	previewLang.innerHTML = '<h2 class="cv-preview-title">Języki:</h2>'
+
+	const langForms = document.querySelectorAll('.language-form')
+
+	langForms.forEach(form => {
+		const langBox = document.createElement('div')
+		langBox.classList.add('preview-lang-box')
+
+		const lang = document.createElement('p')
+		lang.classList.add('preview-lang-lang')
+		const langSpace = document.createElement('p')
+		langSpace.classList.add('space')
+		langSpace.textContent = '-'
+		const langLvl = document.createElement('p')
+		langLvl.classList.add('preview-lang-lvl')
+
+		const formLang = form.querySelector('[name="language"]')
+		const formLangLvl = form.querySelector('[name="level"]')
+
+		lang.textContent = formLang.value
+		langLvl.textContent = formLangLvl.value
+
+		langBox.append(lang, langSpace, langLvl)
+		previewLang.append(langBox)
+	})
+}
+
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
+	generateUserLang()
 }
 
 //LocalStorage
