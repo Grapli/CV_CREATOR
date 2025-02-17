@@ -31,16 +31,21 @@
 .cv-preview {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: 1fr 1fr 1fr;
+	// grid-template-rows: 1fr 1fr 1fr;
 	margin: 2.5em 0.5em;
 	border: 1px solid $accent;
 }
-// about
-.cv-preview-about {
+.left-side {
 	grid-column: 1/1;
 	grid-row: 1/-1;
-	background: $gray;
+	background-color: $gray;
 }
+.right-side {
+	grid-column: 2/-1;
+	// grid-row: 1/-1;
+}
+// about
+
 .img-preview-box {
 	display: flex;
 	justify-content: center;
@@ -59,10 +64,9 @@
 }
 // job
 .cv-preview-job {
-	grid-column: 2/-1;
 	margin-left: 5px;
 }
-.preview-job-box{
+.preview-job-box {
 	margin: 0.3em 0;
 }
 .preview-job-date {
@@ -72,4 +76,18 @@
 .preview-job-description {
 	text-align: left;
 	margin-top: 0.2em;
+	max-width: 100%;
+}
+//preview lang
+.cv-preview-lang {
+	grid-column: 1/1;
+	// grid-column: 1/2;
+	background-color: $gray;
+}
+.preview-lang-box {
+	display: flex;
+}
+.preview-lang-lang,
+.preview-lang-lvl {
+	margin: 0.1em 0.5em;
 }

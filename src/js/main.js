@@ -4,10 +4,8 @@ const eduBtn = document.querySelector('.edu-button')
 const langBtn = document.querySelector('.language-button')
 const skillBtn = document.querySelector('.skills-button')
 const btnGenerate = document.querySelector('.btn-generate')
-const userName = document.querySelector('.name-preview')
-const userEmail = document.querySelector('.email-preview')
-const userTel = document.querySelector('.tel-preview')
-const userImg = document.querySelector('.img-preview')
+const btnDeleteAll = document.querySelector('.btn-delete-all')
+
 // Funkcje generujące nowy formularz
 const createJob = () => {
 	const cvBoxJob = document.querySelector('.cv-box-job')
@@ -151,6 +149,10 @@ const createSkills = () => {
 }
 // Funkcje dodające dane do preview
 const generateUserDataAbout = () => {
+	const userName = document.querySelector('.name-preview')
+	const userEmail = document.querySelector('.email-preview')
+	const userTel = document.querySelector('.tel-preview')
+	const userImg = document.querySelector('.img-preview')
 	const formName = document.querySelector('#name')
 	const formLastName = document.querySelector('#last-name')
 	userName.textContent = formName.value + ' ' + formLastName.value
