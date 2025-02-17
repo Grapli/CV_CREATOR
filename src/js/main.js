@@ -163,53 +163,51 @@ generateUserDataAbout()
 
 const generateUserJob = () => {
 	const previewJob = document.querySelector('.cv-preview-job')
-	const jobBox = document.createElement('div')
-	jobBox.classList.add('preview-job-box')
 
-	const jobTitle = document.createElement('h3')
-	jobTitle.classList.add('preview-job-box-title')
+	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
 
-	const jobRole = document.createElement('h4')
-	jobRole.classList.add('preview-job-role')
+	const jobForms = document.querySelectorAll('.job-form')
 
-	const jobDateBox = document.createElement('div')
-	jobDateBox.classList.add('preview-job-date')
-
-	const jobFrom = document.createElement('p')
-	jobFrom.classList.add('preview-job-from')
-
-	const jobTo = document.createElement('p')
-	jobTo.classList.add('preview-job-to')
-
-	const jobSpace = document.createElement('p')
-	jobSpace.classList.add('space')
-	jobSpace.textContent = '-'
-
-	const jobDescription = document.createElement('p')
-	jobDescription.classList.add('preview-job-description')
-
-	const formJobCompany = document.querySelector('#company')
-	const formJobRole = document.querySelector('#job-title')
-	const formJobStart = document.querySelector('#job-start')
-	const formJobEnd = document.querySelector('#job-end')
-	const formJobDescription = document.querySelector('#job-description')
-
-	jobTitle.textContent = formJobCompany.value
-	jobRole.textContent = formJobRole.value
-
-	jobFrom.textContent = formJobStart.value
-	jobTo.textContent = formJobEnd.value
-
-	jobDescription.textContent = formJobDescription.value
-
-	jobDateBox.append(jobFrom, jobSpace, jobTo)
-	jobBox.append(jobTitle, jobDateBox, jobRole, jobDescription)
-	previewJob.append(jobBox)
+	jobForms.forEach(form => {
+		const jobBox = document.createElement('div')
+		jobBox.classList.add('preview-job-box')
+		const jobTitle = document.createElement('h3')
+		jobTitle.classList.add('preview-job-box-title')
+		const jobRole = document.createElement('h4')
+		jobRole.classList.add('preview-job-role')
+		const jobDateBox = document.createElement('div')
+		jobDateBox.classList.add('preview-job-date')
+		const jobFrom = document.createElement('p')
+		jobFrom.classList.add('preview-job-from')
+		const jobTo = document.createElement('p')
+		jobTo.classList.add('preview-job-to')
+		const jobSpace = document.createElement('p')
+		jobSpace.classList.add('space')
+		jobSpace.textContent = '-'
+		const jobDescription = document.createElement('p')
+		jobDescription.classList.add('preview-job-description')
+		const formJobCompany = form.querySelector('[name="company"]')
+		const formJobRole = form.querySelector('[name="job-title"]')
+		const formJobStart = form.querySelector('[name="job-start"]')
+		const formJobEnd = form.querySelector('[name="job-end"]')
+		const formJobDescription = form.querySelector('[name="job-description"]')
+		jobTitle.textContent = formJobCompany.value || 'Brak nazwy firmy'
+		jobRole.textContent = formJobRole.value || 'Brak stanowiska'
+		jobFrom.textContent = formJobStart.value || '????-??'
+		jobTo.textContent = formJobEnd.value || '????-??'
+		jobDescription.textContent = formJobDescription.value || 'Brak opisu'
+		jobDateBox.append(jobFrom, jobSpace, jobTo)
+		jobBox.append(jobTitle, jobDateBox, jobRole, jobDescription)
+		previewJob.append(jobBox)
+	})
 }
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
 }
+
+//LocalStorage
+
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEdu)
 langBtn.addEventListener('click', createLanguage)
