@@ -198,7 +198,7 @@ const generateUserJob = () => {
 		jobTo.textContent = formJobEnd.value || '????-??'
 		jobDescription.textContent = formJobDescription.value || 'Brak opisu'
 		jobDateBox.append(jobFrom, jobSpace, jobTo)
-		jobBox.append(jobTitle, jobDateBox, jobRole, jobDescription)
+		jobBox.append(jobTitle, jobRole, jobDateBox, jobDescription)
 		previewJob.append(jobBox)
 	})
 }
