@@ -232,10 +232,57 @@ const generateUserLang = () => {
 	})
 }
 
+const generateUserEdu = () => {
+	const previewEdu = document.querySelector('.cv-preview-edu')
+
+	previewEdu.innerHTML = '<h2 class="cv-preview-edu-title">Edukacja:</h2>'
+
+	const eduForms = document.querySelectorAll('.edu-form')
+
+	eduForms.forEach(form => {
+		const eduBox = document.createElement('div')
+		eduBox.classList.add('preview-edu-box')
+
+		const eduTitle = document.createElement('h3')
+		eduTitle.classList.add('preview-edu-title')
+
+		const eduRole = document.createElement('h4')
+		eduRole.classList.add('.preview-edu-role')
+
+		const eduDate = document.createElement('div')
+		eduDate.classList.add('preview-edu-date')
+
+		const eduFrom = document.createElement('p')
+		eduFrom.classList.add('preview-edu-from')
+
+		const eduSpace = document.createElement('p')
+		eduSpace.classList.add('space')
+		eduSpace.textContent = '-'
+
+		const eduTo = document.createElement('p')
+		eduTo.classList.add('preview-edu-to')
+
+		const eduSchool = form.querySelector('[name="school"]')
+		const eduRoleLvl = form.querySelector('[name="degree"]')
+		const eduStart = form.querySelector('[name="edu-start"]')
+		const eduEnd = form.querySelector('[name="edu-end"]')
+
+		eduTitle.textContent = eduSchool.value
+		eduRole.textContent = eduRoleLvl.value
+		eduFrom.textContent = eduStart.value
+		eduTo.textContent = eduEnd.value
+
+		eduDate.append(eduFrom, eduSpace, eduTo)
+		eduBox.append(eduTitle, eduRole, eduDate)
+		previewEdu.append(eduBox)
+	})
+}
+
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
 	generateUserLang()
+	generateUserEdu()
 }
 
 //LocalStorage
