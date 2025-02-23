@@ -277,12 +277,32 @@ const generateUserEdu = () => {
 		previewEdu.append(eduBox)
 	})
 }
+const generateUserSkills = () => {
+	const previewSkills = document.querySelector('.cv-preview-skills')
+
+	previewSkills.innerHTML = ' <h2 class="cv-preview-skills-title">Umiejętności:</h2>'
+
+	const skillForms = document.querySelectorAll('.skills-form')
+	const skillList = document.createElement('ul')
+	skillList.classList.add('preview-skill-list')
+
+	skillForms.forEach(form => {
+		const skillItem = document.createElement('li')
+		skillItem.classList.add('preview-skill-item')
+		const formSkill = form.querySelector('[name="skills"]')
+		skillItem.textContent = formSkill.value
+
+		skillList.append(skillItem)
+		previewSkills.append(skillList)
+	})
+}
 
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
 	generateUserLang()
 	generateUserEdu()
+	generateUserSkills()
 }
 
 //LocalStorage
