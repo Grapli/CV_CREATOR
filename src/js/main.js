@@ -304,6 +304,18 @@ const generatePreview = () => {
 	generateUserEdu()
 	generateUserSkills()
 }
+const clearAll = () => {
+	const previewJob = document.querySelector('.cv-preview-job')
+	const previewEdu = document.querySelector('.cv-preview-edu')
+	const previewLang = document.querySelector('.cv-preview-lang')
+	const previewSkills = document.querySelector('.cv-preview-skills')
+
+	previewJob.textContent = ''
+	previewEdu.textContent = ''
+	previewLang.textContent = ''
+	previewSkills.textContent = ''
+}
+
 
 //LocalStorage
 
@@ -312,3 +324,4 @@ eduBtn.addEventListener('click', createEdu)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnGenerate.addEventListener('click', generatePreview)
+btnDeleteAll.addEventListener('click',clearAll)
