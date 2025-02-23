@@ -164,11 +164,8 @@ const generateUserDataAbout = () => {
 
 const generateUserJob = () => {
 	const previewJob = document.querySelector('.cv-preview-job')
-
 	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
-
 	const jobForms = document.querySelectorAll('.job-form')
-
 	jobForms.forEach(form => {
 		const jobBox = document.createElement('div')
 		jobBox.classList.add('preview-job-box')
@@ -204,74 +201,54 @@ const generateUserJob = () => {
 }
 const generateUserLang = () => {
 	const previewLang = document.querySelector('.cv-preview-lang')
-
 	previewLang.innerHTML = '<h2 class="cv-preview-title">Języki:</h2>'
-
 	const langForms = document.querySelectorAll('.language-form')
-
 	langForms.forEach(form => {
 		const langBox = document.createElement('div')
 		langBox.classList.add('preview-lang-box')
-
-		const lang = document.createElement('p')
+	const lang = document.createElement('p')
 		lang.classList.add('preview-lang-lang')
 		const langSpace = document.createElement('p')
 		langSpace.classList.add('space')
 		langSpace.textContent = '-'
 		const langLvl = document.createElement('p')
 		langLvl.classList.add('preview-lang-lvl')
-
 		const formLang = form.querySelector('[name="language"]')
 		const formLangLvl = form.querySelector('[name="level"]')
-
 		lang.textContent = formLang.value
 		langLvl.textContent = formLangLvl.value
-
 		langBox.append(lang, langSpace, langLvl)
 		previewLang.append(langBox)
 	})
 }
-
 const generateUserEdu = () => {
 	const previewEdu = document.querySelector('.cv-preview-edu')
-
 	previewEdu.innerHTML = '<h2 class="cv-preview-edu-title">Edukacja:</h2>'
-
 	const eduForms = document.querySelectorAll('.edu-form')
-
 	eduForms.forEach(form => {
 		const eduBox = document.createElement('div')
 		eduBox.classList.add('preview-edu-box')
-
 		const eduTitle = document.createElement('h3')
 		eduTitle.classList.add('preview-edu-title')
-
 		const eduRole = document.createElement('h4')
 		eduRole.classList.add('.preview-edu-role')
-
 		const eduDate = document.createElement('div')
 		eduDate.classList.add('preview-edu-date')
-
 		const eduFrom = document.createElement('p')
 		eduFrom.classList.add('preview-edu-from')
-
 		const eduSpace = document.createElement('p')
 		eduSpace.classList.add('space')
 		eduSpace.textContent = '-'
-
 		const eduTo = document.createElement('p')
 		eduTo.classList.add('preview-edu-to')
-
 		const eduSchool = form.querySelector('[name="school"]')
 		const eduRoleLvl = form.querySelector('[name="degree"]')
 		const eduStart = form.querySelector('[name="edu-start"]')
 		const eduEnd = form.querySelector('[name="edu-end"]')
-
 		eduTitle.textContent = eduSchool.value
 		eduRole.textContent = eduRoleLvl.value
 		eduFrom.textContent = eduStart.value
 		eduTo.textContent = eduEnd.value
-
 		eduDate.append(eduFrom, eduSpace, eduTo)
 		eduBox.append(eduTitle, eduRole, eduDate)
 		previewEdu.append(eduBox)
@@ -279,13 +256,10 @@ const generateUserEdu = () => {
 }
 const generateUserSkills = () => {
 	const previewSkills = document.querySelector('.cv-preview-skills')
-
 	previewSkills.innerHTML = ' <h2 class="cv-preview-skills-title">Umiejętności:</h2>'
-
 	const skillForms = document.querySelectorAll('.skills-form')
 	const skillList = document.createElement('ul')
 	skillList.classList.add('preview-skill-list')
-
 	skillForms.forEach(form => {
 		const skillItem = document.createElement('li')
 		skillItem.classList.add('preview-skill-item')
@@ -296,7 +270,6 @@ const generateUserSkills = () => {
 		previewSkills.append(skillList)
 	})
 }
-
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
@@ -309,12 +282,10 @@ const clearAll = () => {
 	const previewEdu = document.querySelector('.cv-preview-edu')
 	const previewLang = document.querySelector('.cv-preview-lang')
 	const previewSkills = document.querySelector('.cv-preview-skills')
-	
 	const skillForms = document.querySelectorAll('.skills-form')
 	const eduForms = document.querySelectorAll('.edu-form')
 	const langForms = document.querySelectorAll('.language-form')
 	const jobForms = document.querySelectorAll('.job-form')
-
 	previewJob.textContent = ''
 	previewEdu.textContent = ''
 	previewLang.textContent = ''
@@ -323,10 +294,11 @@ const clearAll = () => {
 	eduForms.forEach(form => form.remove())
 	langForms.forEach(form => form.remove())
 	jobForms.forEach(form => form.remove())
-	
 }
 
 //LocalStorage
+
+
 
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEdu)
