@@ -309,13 +309,22 @@ const clearAll = () => {
 	const previewEdu = document.querySelector('.cv-preview-edu')
 	const previewLang = document.querySelector('.cv-preview-lang')
 	const previewSkills = document.querySelector('.cv-preview-skills')
+	
+	const skillForms = document.querySelectorAll('.skills-form')
+	const eduForms = document.querySelectorAll('.edu-form')
+	const langForms = document.querySelectorAll('.language-form')
+	const jobForms = document.querySelectorAll('.job-form')
 
 	previewJob.textContent = ''
 	previewEdu.textContent = ''
 	previewLang.textContent = ''
 	previewSkills.textContent = ''
+	skillForms.forEach(form => form.remove())
+	eduForms.forEach(form => form.remove())
+	langForms.forEach(form => form.remove())
+	jobForms.forEach(form => form.remove())
+	
 }
-
 
 //LocalStorage
 
@@ -324,4 +333,4 @@ eduBtn.addEventListener('click', createEdu)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnGenerate.addEventListener('click', generatePreview)
-btnDeleteAll.addEventListener('click',clearAll)
+btnDeleteAll.addEventListener('click', clearAll)
