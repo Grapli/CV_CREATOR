@@ -206,7 +206,7 @@ const generateUserLang = () => {
 	langForms.forEach(form => {
 		const langBox = document.createElement('div')
 		langBox.classList.add('preview-lang-box')
-	const lang = document.createElement('p')
+		const lang = document.createElement('p')
 		lang.classList.add('preview-lang-lang')
 		const langSpace = document.createElement('p')
 		langSpace.classList.add('space')
@@ -297,8 +297,22 @@ const clearAll = () => {
 }
 
 //LocalStorage
-
-
+const saveUserDataAbout = () => {
+	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
+	inputs.forEach(input => {
+		localStorage.setItem(input.name, input.value)
+	})
+}
+const loadLocalStorage = () => {
+	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
+	inputs.forEach(input => {
+		input.value = localStorage.getItem(input.name) || ''
+	})
+}
+const inputsDataAbout = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
+inputsDataAbout.forEach(input => {
+	input.addEventListener('input', saveUserDataAbout)
+})
 
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEdu)
@@ -306,3 +320,4 @@ langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnGenerate.addEventListener('click', generatePreview)
 btnDeleteAll.addEventListener('click', clearAll)
+document.addEventListener('DOMContentLoaded', loadLocalStorage)
