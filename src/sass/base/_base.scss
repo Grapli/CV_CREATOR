@@ -36,22 +36,26 @@ body {
 	background-color: $accent;
 	color: $white;
 }
-form {
+form,
+.form {
 	padding: 1em;
 	background-color: $gray;
 	display: flex;
 	flex-direction: column;
 }
-label {
+label,
+.label {
 	font-size: 2rem;
 	margin-top: 10px;
 }
-input {
+input,
+.input {
 	margin-top: 10px;
 	height: 2em;
 	font-size: 1.8rem;
 }
-textarea {
+textarea,
+.textarea {
 	max-width: 100%;
 	min-width: 100%;
 	height: 100px;

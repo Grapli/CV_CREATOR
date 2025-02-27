@@ -47,73 +47,53 @@ const createJob = () => {
 	jobForm.append(deleteBtn)
 	cvBoxJob.append(jobForm)
 }
-const createEdu = () => {
-	const cvBoxEdu = document.querySelector('.cv-box-edu')
-	const eduForm = document.createElement('form')
-	eduForm.classList.add('edu-form')
-	eduForm.setAttribute('action', '')
-	const fields = [
-		{ label: 'Szkoła/Uczelnia:', type: 'text', id: 'school', name: 'school' },
-		{ label: 'Kierunek/Stopień:', type: 'text', id: 'degree', name: 'degree' },
-		{ label: 'Od:', type: 'month', id: 'edu-start', name: 'edu-start' },
-		{ label: 'Do:', type: 'month', id: 'edu-end', name: 'edu-end' },
-	]
-	fields.forEach(field => {
-		const label = document.createElement('label')
-		label.setAttribute('for', field.id)
-		label.textContent = field.label
-		let input
-		input = document.createElement('input')
-		input.setAttribute('type', field.type)
-		if (field.placeholder) {
-			input.setAttribute('placeholder', field.placeholder)
-		}
-		input.setAttribute('id', field.id)
-		input.setAttribute('name', field.name)
-		eduForm.append(label, input)
+const createEduForm = (data = {}) => {
+	const eduContainer = document.querySelector('.cv-box-edu') // Kontener na formularze
+	const form = document.createElement('form')
+	form.classList.add('edu-form', 'form')
+	form.setAttribute('data-id', data.id || Date.now().toString())
+	form.innerHTML = `
+		<label for="school" class="label">Szkoła/Uczelnia </label>
+        <input type="text" class="input" name="school" placeholder="Nazwa szkoły" value="${data.school || ''}" />
+		<label for="degree" class="label">Kierunek/Stopień</label>
+        <input type="text" class="input" name="degree" placeholder="Stopień/tytuł" value="${data.degree || ''}" />
+		<label for="edu-start" class="label">Od:</label>
+        <input type="date"  class="input" name="edu-start" value="${data.start || ''}" />
+		<label for="edu-end" class="label">Do:</label>
+        <input type="date" class="input" name="edu-end" value="${data.end || ''}" />
+        <button class="delete">Usuń</button>
+    `
+	form.querySelectorAll('input').forEach(input => {
+		input.addEventListener('input', saveEduData)
 	})
-	const deleteBtn = document.createElement('button')
-	deleteBtn.classList.add('delete')
-	deleteBtn.textContent = 'Usuń'
-	deleteBtn.addEventListener('click', e => {
-		e.preventDefault()
-		eduForm.remove()
+	form.querySelector('.delete').addEventListener('click', () => {
+		form.remove()
+		saveEduData()
 	})
-	eduForm.append(deleteBtn)
-	cvBoxEdu.append(eduForm)
+	eduContainer.appendChild(form)
 }
-const createLanguage = () => {
-	const cvBoxLang = document.querySelector('.cv-box-lang')
-	const langForm = document.createElement('form')
-	langForm.setAttribute('action', '')
-	langForm.classList.add('language-form')
-	const fields = [
-		{ label: 'Język:', type: 'text', id: 'language', name: 'language', placeholder: 'np. Angielski' },
-		{ label: 'Poziom:', type: 'text', id: 'level', name: 'level', placeholder: 'np. C1' },
-	]
-	fields.forEach(field => {
-		const label = document.createElement('label')
-		label.setAttribute('for', field.id)
-		label.textContent = field.label
-		let input
-		input = document.createElement('input')
-		input.setAttribute('type', field.type)
-		if (field.placeholder) {
-			input.setAttribute('placeholder', field.placeholder)
-		}
-		input.setAttribute('id', field.id)
-		input.setAttribute('name', field.name)
-		langForm.append(label, input)
+const createLanguage = (data = {}) => {
+	const langContainer = document.querySelector('.cv-box-lang')
+	const form = document.createElement('form')
+	form.classList.add('language-form', 'form')
+	form.setAttribute('data-id', data.id || Date.now().toString())
+	form.innerHTML = `
+		<label for="language" class="label">Umiętności:</label>
+    	<input type="text"  class="input"id="language" name="language" placeholder="Angielski" value="${
+				data.language || ''
+			}">
+    	<label for="level" class="label"></label>
+      	<input type="text" class="input" id="level" name="level" placeholder="C1" value="${data.level || ''}">
+     	<button class="delete">Usuń</button>
+	`
+	form.querySelectorAll('input').forEach(input => {
+		input.addEventListener('input', saveLangData)
 	})
-	const deleteBtn = document.createElement('button')
-	deleteBtn.classList.add('delete')
-	deleteBtn.textContent = 'Usuń'
-	deleteBtn.addEventListener('click', e => {
-		e.preventDefault()
-		langForm.remove()
+	form.querySelector('.delete').addEventListener('click', () => {
+		form.remove()
+		saveLangData()
 	})
-	langForm.append(deleteBtn)
-	cvBoxLang.append(langForm)
+	langContainer.appendChild(form)
 }
 const createSkills = () => {
 	const cvBoxSkills = document.querySelector('.cv-box-skills')
@@ -161,94 +141,87 @@ const generateUserDataAbout = () => {
 	const formTel = document.querySelector('#tel')
 	userTel.textContent = formTel.value
 }
-
-// const generateUserJob = () => {
-// 	const previewJob = document.querySelector('.cv-preview-job')
-// 	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
-// 	const jobForms = document.querySelectorAll('.job-form')
-// 	jobForms.forEach(form => {
-// 		const jobBox = document.createElement('div')
-// 		jobBox.classList.add('preview-job-box')
-// 		const jobTitle = document.createElement('h3')
-// 		jobTitle.classList.add('preview-job-box-title')
-// 		const jobRole = document.createElement('h4')
-// 		jobRole.classList.add('preview-job-role')
-// 		const jobDateBox = document.createElement('div')
-// 		jobDateBox.classList.add('preview-job-date')
-// 		const jobFrom = document.createElement('p')
-// 		jobFrom.classList.add('preview-job-from')
-// 		const jobTo = document.createElement('p')
-// 		jobTo.classList.add('preview-job-to')
-// 		const jobSpace = document.createElement('p')
-// 		jobSpace.classList.add('space')
-// 		jobSpace.textContent = '-'
-// 		const jobDescription = document.createElement('p')
-// 		jobDescription.classList.add('preview-job-description')
-// 		const formJobCompany = form.querySelector('[name="company"]')
-// 		const formJobRole = form.querySelector('[name="job-title"]')
-// 		const formJobStart = form.querySelector('[name="job-start"]')
-// 		const formJobEnd = form.querySelector('[name="job-end"]')
-// 		const formJobDescription = form.querySelector('[name="job-description"]')
-// 		jobTitle.textContent = formJobCompany.value
-// 		jobRole.textContent = formJobRole.value
-// 		jobFrom.textContent = formJobStart.value
-// 		jobTo.textContent = formJobEnd.value 
-// 		jobDescription.textContent = formJobDescription.value
-// 		jobDateBox.append(jobFrom, jobSpace, jobTo)
-// 		jobBox.append(jobTitle, jobRole, jobDateBox, jobDescription)
-// 		previewJob.append(jobBox)
-// 	})
-// }
-// const generateUserLang = () => {
-// 	const previewLang = document.querySelector('.cv-preview-lang')
-// 	previewLang.innerHTML = '<h2 class="cv-preview-title">Języki:</h2>'
-// 	const langForms = document.querySelectorAll('.language-form')
-// 	langForms.forEach(form => {
-// 		const langBox = document.createElement('div')
-// 		langBox.classList.add('preview-lang-box')
-// 		const lang = document.createElement('p')
-// 		lang.classList.add('preview-lang-lang')
-// 		const langSpace = document.createElement('p')
-// 		langSpace.classList.add('space')
-// 		langSpace.textContent = '-'
-// 		const langLvl = document.createElement('p')
-// 		langLvl.classList.add('preview-lang-lvl')
-// 		const formLang = form.querySelector('[name="language"]')
-// 		const formLangLvl = form.querySelector('[name="level"]')
-// 		lang.textContent = formLang.value
-// 		langLvl.textContent = formLangLvl.value
-// 		langBox.append(lang, langSpace, langLvl)
-// 		previewLang.append(langBox)
-// 	})
-// }
+const generateUserJob = () => {
+	const previewJob = document.querySelector('.cv-preview-job')
+	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
+	const jobForms = document.querySelectorAll('.job-form')
+	jobForms.forEach(form => {
+		const jobBox = document.createElement('div')
+		jobBox.classList.add('preview-job-box')
+		const jobTitle = document.createElement('h3')
+		jobTitle.classList.add('preview-job-box-title')
+		const jobRole = document.createElement('h4')
+		jobRole.classList.add('preview-job-role')
+		const jobDateBox = document.createElement('div')
+		jobDateBox.classList.add('preview-job-date')
+		const jobFrom = document.createElement('p')
+		jobFrom.classList.add('preview-job-from')
+		const jobTo = document.createElement('p')
+		jobTo.classList.add('preview-job-to')
+		const jobSpace = document.createElement('p')
+		jobSpace.classList.add('space')
+		jobSpace.textContent = '-'
+		const jobDescription = document.createElement('p')
+		jobDescription.classList.add('preview-job-description')
+		const formJobCompany = form.querySelector('[name="company"]')
+		const formJobRole = form.querySelector('[name="job-title"]')
+		const formJobStart = form.querySelector('[name="job-start"]')
+		const formJobEnd = form.querySelector('[name="job-end"]')
+		const formJobDescription = form.querySelector('[name="job-description"]')
+		jobTitle.textContent = formJobCompany.value
+		jobRole.textContent = formJobRole.value
+		jobFrom.textContent = formJobStart.value
+		jobTo.textContent = formJobEnd.value
+		jobDescription.textContent = formJobDescription.value
+		jobDateBox.append(jobFrom, jobSpace, jobTo)
+		jobBox.append(jobTitle, jobRole, jobDateBox, jobDescription)
+		previewJob.append(jobBox)
+	})
+}
+const generateUserLang = () => {
+	const previewLang = document.querySelector('.cv-preview-lang')
+	previewLang.innerHTML = '<h2 class="cv-preview-title">Języki:</h2>'
+	const savedData = JSON.parse(localStorage.getItem('langData')) || []
+	savedData.forEach(data => {
+		const langBox = document.createElement('div')
+		langBox.classList.add('preview-lang-box')
+		const lang = document.createElement('p')
+		lang.classList.add('preview-lang-lang')
+		lang.textContent = data.language
+		const langSpace = document.createElement('p')
+		langSpace.classList.add('space')
+		langSpace.textContent = '-'
+		const langLvl = document.createElement('p')
+		langLvl.classList.add('preview-lang-lvl')
+		langLvl.textContent = data.level
+		langBox.append(lang, langSpace, langLvl)
+		previewLang.append(langBox)
+	})
+}
 const generateUserEdu = () => {
 	const previewEdu = document.querySelector('.cv-preview-edu')
 	previewEdu.innerHTML = '<h2 class="cv-preview-edu-title">Edukacja:</h2>'
-	const eduForms = document.querySelectorAll('.edu-form')
-	eduForms.forEach(form => {
+	const savedData = JSON.parse(localStorage.getItem('eduData')) || []
+	savedData.forEach(data => {
 		const eduBox = document.createElement('div')
 		eduBox.classList.add('preview-edu-box')
 		const eduTitle = document.createElement('h3')
 		eduTitle.classList.add('preview-edu-title')
+		eduTitle.textContent = data.school
 		const eduRole = document.createElement('h4')
-		eduRole.classList.add('.preview-edu-role')
+		eduRole.classList.add('preview-edu-role')
+		eduRole.textContent = data.degree
 		const eduDate = document.createElement('div')
 		eduDate.classList.add('preview-edu-date')
 		const eduFrom = document.createElement('p')
 		eduFrom.classList.add('preview-edu-from')
+		eduFrom.textContent = data.start
 		const eduSpace = document.createElement('p')
 		eduSpace.classList.add('space')
 		eduSpace.textContent = '-'
 		const eduTo = document.createElement('p')
 		eduTo.classList.add('preview-edu-to')
-		const eduSchool = form.querySelector('[name="school"]')
-		const eduRoleLvl = form.querySelector('[name="degree"]')
-		const eduStart = form.querySelector('[name="edu-start"]')
-		const eduEnd = form.querySelector('[name="edu-end"]')
-		eduTitle.textContent = eduSchool.value
-		eduRole.textContent = eduRoleLvl.value
-		eduFrom.textContent = eduStart.value
-		eduTo.textContent = eduEnd.value
+		eduTo.textContent = data.end
 		eduDate.append(eduFrom, eduSpace, eduTo)
 		eduBox.append(eduTitle, eduRole, eduDate)
 		previewEdu.append(eduBox)
@@ -294,6 +267,21 @@ const clearAll = () => {
 	eduForms.forEach(form => form.remove())
 	langForms.forEach(form => form.remove())
 	jobForms.forEach(form => form.remove())
+	const userName = document.querySelector('.name-preview')
+	const userEmail = document.querySelector('.email-preview')
+	const userTel = document.querySelector('.tel-preview')
+	const userImg = document.querySelector('.img-preview')
+	userName.textContent = ''
+	userEmail.textContent = ''
+	userTel.textContent = ''
+	const formName = document.querySelector('#name')
+	const formLastName = document.querySelector('#last-name')
+	const formEmail = document.querySelector('#email')
+	const formTel = document.querySelector('#tel')
+	formName.value = ''
+	formLastName.value = ''
+	formEmail.value = ''
+	formTel.value = ''
 	localStorage.clear()
 }
 //LocalStorage
@@ -313,36 +301,53 @@ const loadFormsUserAbout = () => {
 		input.value = localStorage.getItem(input.name) || ''
 	})
 }
-const saveFormsUserJob = () => {
-	const inputs = document.querySelectorAll(
-		'[name="company"],[name="job-title"],[name="job-start"],[name="job-end"],[name="job-description"]'
-	)
-	inputs.forEach(input => {
-		localStorage.setItem(input.name, input.value)
+const saveEduData = () => {
+	const eduForms = document.querySelectorAll('.edu-form')
+	let eduData = []
+	eduForms.forEach(form => {
+		const id = form.getAttribute('data-id') || Date.now().toString()
+		form.setAttribute('data-id', id)
+		const eduSchool = form.querySelector('[name="school"]').value
+		const eduRoleLvl = form.querySelector('[name="degree"]').value
+		const eduStart = form.querySelector('[name="edu-start"]').value
+		const eduEnd = form.querySelector('[name="edu-end"]').value
+		eduData.push({ id, school: eduSchool, degree: eduRoleLvl, start: eduStart, end: eduEnd })
 	})
+	localStorage.setItem('eduData', JSON.stringify(eduData))
 }
-const ovbserveFormsJob = document.querySelectorAll(
-	'[name="company"],[name="job-title"],[name="job-start"],[name="job-end"],[name="job-description"]')
-ovbserveFormsJob.forEach(input => {
-	input.addEventListener('input', saveFormsUserJob)
-})
-const loadFormsUserJob = () => {
-	const inputs = document.querySelectorAll(
-		'[name="company"],[name="job-title"],[name="job-start"],[name="job-end"],[name="job-description"]'
-	)
-	inputs.forEach(input => {
-		input.value = localStorage.getItem(input.name) || ''
+const loadEduData = () => {
+	const savedData = JSON.parse(localStorage.getItem('eduData')) || []
+	savedData.forEach(data => {
+		createEduForm(data)
 	})
+	generateUserEdu() // Po załadowaniu formularzy aktualizujemy podgląd CV
 }
-
-
+const saveLangData = () => {
+	const langForms = document.querySelectorAll('.language-form')
+	let langData = []
+	langForms.forEach(form => {
+		const id = form.getAttribute('data-id') || Date.now().toString()
+		form.setAttribute('data-id', id)
+		const langName = form.querySelector('[name="language"]').value
+		const langLevel = form.querySelector('[name="level"]').value
+		langData.push({ id, language: langName, level: langLevel })
+	})
+	localStorage.setItem('langData', JSON.stringify(langData))
+}
+const loadLangData = () => {
+	const savedData = JSON.parse(localStorage.getItem('langData')) || []
+	savedData.forEach(data => {
+		createLanguage(data)
+	})
+	generateUserLang() // Po załadowaniu formularzy aktualizujemy podgląd CV
+}
 const loadLocalStorage = () => {
 	loadFormsUserAbout()
-	loadFormsUserJob()
+	loadEduData()
+	loadLangData()
 }
-
 jobBtn.addEventListener('click', createJob)
-eduBtn.addEventListener('click', createEdu)
+eduBtn.addEventListener('click', createEduForm)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnGenerate.addEventListener('click', generatePreview)
