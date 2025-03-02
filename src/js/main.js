@@ -7,45 +7,35 @@ const btnGenerate = document.querySelector('.btn-generate')
 const btnDeleteAll = document.querySelector('.btn-delete-all')
 
 // Funkcje generujące nowy formularz
-const createJob = () => {
-	const cvBoxJob = document.querySelector('.cv-box-job')
-	const jobForm = document.createElement('form')
-	jobForm.classList.add('job-form')
-	jobForm.setAttribute('action', '')
-	const fields = [
-		{ label: 'Firma:', type: 'text', id: 'company', name: 'company', placeholder: 'np. IT Software house' },
-		{ label: 'Stanowisko:', type: 'text', id: 'job-title', name: 'job-title', placeholder: 'np. Specjalista' },
-		{ label: 'Od:', type: 'month', id: 'job-start', name: 'job-start' },
-		{ label: 'Do:', type: 'month', id: 'job-end', name: 'job-end' },
-		{ label: 'Opis:', type: 'textarea', id: 'job-description', name: 'job-description' },
-	]
-	fields.forEach(field => {
-		const label = document.createElement('label')
-		label.setAttribute('for', field.id)
-		label.textContent = field.label
-		let input
-		if (field.type === 'textarea') {
-			input = document.createElement('textarea')
-		} else {
-			input = document.createElement('input')
-			input.setAttribute('type', field.type)
-			if (field.placeholder) {
-				input.setAttribute('placeholder', field.placeholder)
-			}
-		}
-		input.setAttribute('id', field.id)
-		input.setAttribute('name', field.name)
-		jobForm.append(label, input)
+const createJob = (data = {}) => {
+	const jobContainer = document.querySelector('.cv-box-job')
+	const form = document.createElement('form')
+	form.classList.add('job-form', 'form')
+	form.setAttribute('data-id', data.id || Date.now().toString())
+	form.innerHTML = `
+	<label for="company" class="label">Firma:</label>
+	<input type="text" placeholder="np. IT Software house" id="company" name="company" class="input" value="${
+		data.company || ''
+	}">	
+	<label for="job-title" class="label">Stanowisko:</label>
+	<input type="text" placeholder="np. Specjalista" id="job-title" name="job-title" class="input" value="${
+		data.role || ''
+	}">
+	<label for="job-start" class="label">Od:</label>
+	<input type="month" id="job-start" name="job-start" class="input" value="${data.start || ''}">
+	<label for="job-end" class="label">Do:</label>
+	<input type="month" id="job-end" name="job-end" class="input" value="${data.end || ''}">	
+	<label for="job-description" class="label">Opis:</label>
+	<textarea id="job-description" name="job-description" class="textarea">${data.description || ''}</textarea>
+	<button type="button" class="delete">Usuń</button>`
+	form.querySelectorAll('input, textarea').forEach(input => {
+		input.addEventListener('input', saveJobData)
 	})
-	const deleteBtn = document.createElement('button')
-	deleteBtn.classList.add('delete')
-	deleteBtn.textContent = 'Usuń'
-	deleteBtn.addEventListener('click', e => {
-		e.preventDefault()
-		jobForm.remove()
+	form.querySelector('.delete').addEventListener('click', () => {
+		form.remove()
+		saveJobData()
 	})
-	jobForm.append(deleteBtn)
-	cvBoxJob.append(jobForm)
+	jobContainer.appendChild(form)
 }
 const createEduForm = (data = {}) => {
 	const eduContainer = document.querySelector('.cv-box-edu') // Kontener na formularze
@@ -144,35 +134,30 @@ const generateUserDataAbout = () => {
 const generateUserJob = () => {
 	const previewJob = document.querySelector('.cv-preview-job')
 	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
-	const jobForms = document.querySelectorAll('.job-form')
-	jobForms.forEach(form => {
+	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
+	savedData.forEach(data => {
 		const jobBox = document.createElement('div')
 		jobBox.classList.add('preview-job-box')
 		const jobTitle = document.createElement('h3')
 		jobTitle.classList.add('preview-job-box-title')
+		jobTitle.textContent = data.company
 		const jobRole = document.createElement('h4')
 		jobRole.classList.add('preview-job-role')
+		jobRole.textContent = data.role
 		const jobDateBox = document.createElement('div')
 		jobDateBox.classList.add('preview-job-date')
 		const jobFrom = document.createElement('p')
 		jobFrom.classList.add('preview-job-from')
+		jobFrom.textContent = data.start
 		const jobTo = document.createElement('p')
 		jobTo.classList.add('preview-job-to')
+		jobTo.textContent = data.end
 		const jobSpace = document.createElement('p')
 		jobSpace.classList.add('space')
 		jobSpace.textContent = '-'
 		const jobDescription = document.createElement('p')
 		jobDescription.classList.add('preview-job-description')
-		const formJobCompany = form.querySelector('[name="company"]')
-		const formJobRole = form.querySelector('[name="job-title"]')
-		const formJobStart = form.querySelector('[name="job-start"]')
-		const formJobEnd = form.querySelector('[name="job-end"]')
-		const formJobDescription = form.querySelector('[name="job-description"]')
-		jobTitle.textContent = formJobCompany.value
-		jobRole.textContent = formJobRole.value
-		jobFrom.textContent = formJobStart.value
-		jobTo.textContent = formJobEnd.value
-		jobDescription.textContent = formJobDescription.value
+		jobDescription.textContent = data.description
 		jobDateBox.append(jobFrom, jobSpace, jobTo)
 		jobBox.append(jobTitle, jobRole, jobDateBox, jobDescription)
 		previewJob.append(jobBox)
@@ -320,7 +305,7 @@ const loadEduData = () => {
 	savedData.forEach(data => {
 		createEduForm(data)
 	})
-	generateUserEdu() // Po załadowaniu formularzy aktualizujemy podgląd CV
+	generateUserEdu()
 }
 const saveLangData = () => {
 	const langForms = document.querySelectorAll('.language-form')
@@ -339,12 +324,36 @@ const loadLangData = () => {
 	savedData.forEach(data => {
 		createLanguage(data)
 	})
-	generateUserLang() // Po załadowaniu formularzy aktualizujemy podgląd CV
+	generateUserLang()
 }
+
+const saveJobData = () => {
+	const jobForms = document.querySelectorAll('.job-form')
+	let jobData = []
+	jobForms.forEach(form => {
+		const id = form.getAttribute('data-id') || Date.now().toString()
+		const jobName = form.querySelector('[name="company"]').value
+		const jobRole = form.querySelector('[name="job-title"]').value
+		const jobStart = form.querySelector('[name="job-start"]').value
+		const jobEnd = form.querySelector('[name="job-end"]').value
+		const jobDescription = form.querySelector('[name="job-description"]').value
+		jobData.push({ id, company: jobName, role: jobRole, start: jobStart, end: jobEnd, description: jobDescription })
+	})
+	localStorage.setItem('jobData', JSON.stringify(jobData))
+}
+const loadJobData = () => {
+	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
+	savedData.forEach(data => {
+		createJob(data)
+	})
+	generateUserJob()
+}
+
 const loadLocalStorage = () => {
 	loadFormsUserAbout()
 	loadEduData()
 	loadLangData()
+	loadJobData()
 }
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
