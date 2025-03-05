@@ -6,7 +6,6 @@ const skillBtn = document.querySelector('.skills-button')
 const btnGenerate = document.querySelector('.btn-generate')
 const btnDeleteAll = document.querySelector('.btn-delete-all')
 
-// Funkcje generujące nowy formularz
 const createJob = (data = {}) => {
 	const jobContainer = document.querySelector('.cv-box-job')
 	const form = document.createElement('form')
@@ -37,7 +36,6 @@ const createJob = (data = {}) => {
 	})
 	jobContainer.appendChild(form)
 }
-
 const createEduForm = (data = {}) => {
 	const eduContainer = document.querySelector('.cv-box-edu') // Kontener na formularze
 	const form = document.createElement('form')
@@ -107,24 +105,29 @@ const createSkills = (data = {}) => {
 	})
 	skillsContainer.append(form)
 }
-// Funkcje dodające dane do preview
 const generateUserDataAbout = () => {
 	const userName = document.querySelector('.name-preview')
 	const userEmail = document.querySelector('.email-preview')
 	const userTel = document.querySelector('.tel-preview')
-	const userImg = document.querySelector('.img-preview')
+
 	const formName = document.querySelector('#name')
 	const formLastName = document.querySelector('#last-name')
-	userName.textContent = formName.value + ' ' + formLastName.value
 	const formEmail = document.querySelector('#email')
-	userEmail.textContent = formEmail.value
 	const formTel = document.querySelector('#tel')
-	userTel.textContent = formTel.value
+
+	if (userName && formName && formLastName) {
+		userName.textContent = `${formName.value} ${formLastName.value}`.trim()
+	}
+	if (userEmail && formEmail) {
+		userEmail.textContent = formEmail.value
+	}
+	if (userTel && formTel) {
+		userTel.textContent = formTel.value
+	}
 }
 const generateUserJob = () => {
 	const previewJob = document.querySelector('.cv-preview-job')
 	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
-
 	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
 	savedData.forEach(data => {
 		const jobBox = document.createElement('div')
@@ -210,14 +213,12 @@ const generateUserSkills = () => {
 	if (savedData.length > 0) {
 		const skillList = document.createElement('ul')
 		skillList.classList.add('preview-skill-list')
-
 		savedData.forEach(data => {
 			const skillItem = document.createElement('li')
 			skillItem.classList.add('preview-skill-item')
 			skillItem.textContent = data.skill
 			skillList.appendChild(skillItem)
 		})
-
 		previewSkills.appendChild(skillList)
 	}
 }
@@ -268,17 +269,18 @@ const saveFormsDataAbout = () => {
 	inputs.forEach(input => {
 		localStorage.setItem(input.name, input.value)
 	})
+	generateUserDataAbout() // Aktualizacja podglądu po zapisaniu
 }
-const observeFormsAbout = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
-observeFormsAbout.forEach(input => {
-	input.addEventListener('input', saveFormsDataAbout)
-})
 const loadFormsUserAbout = () => {
 	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
 	inputs.forEach(input => {
 		input.value = localStorage.getItem(input.name) || ''
 	})
+	generateUserDataAbout() // Odświeżenie podglądu po załadowaniu danych
 }
+document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]').forEach(input => {
+	input.addEventListener('input', saveFormsDataAbout)
+})
 const saveEduData = () => {
 	const eduForms = document.querySelectorAll('.edu-form')
 	let eduData = []
@@ -357,7 +359,6 @@ const loadSkillData = () => {
 	})
 	generateUserSkills()
 }
-
 const loadLocalStorage = () => {
 	loadFormsUserAbout()
 	loadEduData()
