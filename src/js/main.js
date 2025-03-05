@@ -373,3 +373,25 @@ skillBtn.addEventListener('click', createSkills)
 btnGenerate.addEventListener('click', generatePreview)
 btnDeleteAll.addEventListener('click', clearAll)
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
+
+
+
+document.querySelector('.download').addEventListener('click', () => {
+    const element = document.querySelector('.padding-bottom');
+    console.log(element); // Debugowanie: Sprawdzamy, czy element istnieje
+
+    if (element) {
+        html2pdf()
+            .set({
+                margin: 10,
+                filename: 'Moje_CV.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .from(element)
+            .save();
+    } else {
+        console.error('Element .cv-preview nie istnieje!');
+    }
+});

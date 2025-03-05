@@ -13,6 +13,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="/dist/css/main.min.css">
 </head>
+
 <body>
     <div class="container">
         <div class="cv-box cv-box-about">
@@ -67,9 +68,10 @@
         <div class="box-buttons">
             <button class="button btn btn-generate">Generuj</button>
             <button class="button btn btn-delete-all">Usuń wszystko</button>
+            <button class="download button btn">Drukuj</button>
         </div>
     </div>
-    <div class="container">
+    <div class="container padding-bottom">
         <div class="cv-preview">
             <div class="left-side">
                 <div class="cv-preview-about">
@@ -87,13 +89,12 @@
                 <div class="cv-preview-lang"></div>
             </div>
             <div class="right-side">
-               <div class="cv-preview-job"></div>
+                <div class="cv-preview-job"></div>
                 <div class="cv-preview-edu"></div>
                 <div class="cv-preview-skills"></div>
             </div>
         </div>
-
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
         <script src="/dist/js/main.min.js"></script>
 </body>
 
