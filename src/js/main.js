@@ -269,14 +269,14 @@ const saveFormsDataAbout = () => {
 	inputs.forEach(input => {
 		localStorage.setItem(input.name, input.value)
 	})
-	generateUserDataAbout() // Aktualizacja podglądu po zapisaniu
+	generateUserDataAbout()
 }
 const loadFormsUserAbout = () => {
 	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
 	inputs.forEach(input => {
 		input.value = localStorage.getItem(input.name) || ''
 	})
-	generateUserDataAbout() // Odświeżenie podglądu po załadowaniu danych
+	generateUserDataAbout()
 }
 document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]').forEach(input => {
 	input.addEventListener('input', saveFormsDataAbout)
@@ -300,7 +300,7 @@ const loadEduData = () => {
 	savedData.forEach(data => {
 		createEduForm(data)
 	})
-	generateUserEdu() // Po załadowaniu formularzy aktualizujemy podgląd CV
+	generateUserEdu()
 }
 const saveLangData = () => {
 	const langForms = document.querySelectorAll('.language-form')
