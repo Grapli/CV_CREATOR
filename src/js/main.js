@@ -5,6 +5,7 @@ const langBtn = document.querySelector('.language-button')
 const skillBtn = document.querySelector('.skills-button')
 const btnGenerate = document.querySelector('.btn-generate')
 const btnDeleteAll = document.querySelector('.btn-delete-all')
+const downloadBtn = document.querySelector('.download')
 
 const createJob = (data = {}) => {
 	const jobContainer = document.querySelector('.cv-box-job')
@@ -68,7 +69,7 @@ const createLanguage = (data = {}) => {
 	form.setAttribute('data-id', data.id || Date.now().toString())
 	form.innerHTML = `
 		<label for="language" class="label">Język:</label>
-    	<input type="text"  class="input"id="language" name="language" placeholder="Angielski" value="${
+    	<input type="text"  class="input" id="language" name="language" placeholder="Angielski" value="${
 				data.language || ''
 			}">
     	<label for="level" class="label"></label>
@@ -366,32 +367,26 @@ const loadLocalStorage = () => {
 	loadJobData()
 	loadSkillData()
 }
+const downloadPdf = () => {
+	const element = document.getElementById('preview-id')
+	// const element = document.querySelector('.cv-preview-about')
+
+	const options = {
+		margin: 10,
+		filename: 'Moje_CV.pdf',
+		image: { type: 'jpeg', quality: 0.98 },
+		html2canvas: { scale: 2, useCORS: true },
+		jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+	}
+	html2pdf().set(options).from(element).save()
+
+}
+
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnGenerate.addEventListener('click', generatePreview)
 btnDeleteAll.addEventListener('click', clearAll)
+downloadBtn.addEventListener('click', downloadPdf)
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
-
-
-
-document.querySelector('.download').addEventListener('click', () => {
-    const element = document.querySelector('.padding-bottom');
-    console.log(element); // Debugowanie: Sprawdzamy, czy element istnieje
-
-    if (element) {
-        html2pdf()
-            .set({
-                margin: 10,
-                filename: 'Moje_CV.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            })
-            .from(element)
-            .save();
-    } else {
-        console.error('Element .cv-preview nie istnieje!');
-    }
-});

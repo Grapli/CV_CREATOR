@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +12,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="/dist/css/main.min.css">
 </head>
-
 <body>
     <div class="container">
         <div class="cv-box cv-box-about">
@@ -66,12 +64,15 @@
             </div>
         </div>
         <div class="box-buttons">
-            <button class="button btn btn-generate">Generuj</button>
+            <button class="button btn btn-generate">Generuj podgląd</button>
             <button class="button btn btn-delete-all">Usuń wszystko</button>
-            <button class="download button btn">Drukuj</button>
+        </div>
+        <div class="box-buttons">
+            <button class="download button btn">Pobierz</button>
+            <button class="swap-color button btn">Zmień kolor</button>
         </div>
     </div>
-    <div class="container padding-bottom">
+    <div class="container padding-bottom" id="preview-id">
         <div class="cv-preview">
             <div class="left-side">
                 <div class="cv-preview-about">
@@ -94,7 +95,9 @@
                 <div class="cv-preview-skills"></div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="/dist/js/main.min.js"></script>
 </body>
 
