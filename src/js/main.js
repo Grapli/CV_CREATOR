@@ -369,8 +369,6 @@ const loadLocalStorage = () => {
 }
 const downloadPdf = () => {
 	const element = document.getElementById('preview-id')
-	// const element = document.querySelector('.cv-preview-about')
-
 	const options = {
 		margin: 10,
 		filename: 'Moje_CV.pdf',
