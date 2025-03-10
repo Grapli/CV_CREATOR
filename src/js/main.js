@@ -81,6 +81,7 @@ const saveJobData = () => {
 		jobData.push({ id, company: jobName, role: jobRole, start: jobStart, end: jobEnd, description: jobDescription })
 	})
 	localStorage.setItem('jobData', JSON.stringify(jobData))
+	generateUserJob()
 }
 const loadJobData = () => {
 	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
@@ -90,7 +91,7 @@ const loadJobData = () => {
 	generateUserJob()
 }
 const createEduForm = (data = {}) => {
-	const eduContainer = document.querySelector('.cv-box-edu') // Kontener na formularze
+	const eduContainer = document.querySelector('.cv-box-edu')
 	const form = document.createElement('form')
 	form.classList.add('edu-form', 'form')
 	form.setAttribute('data-id', data.id || Date.now().toString())
@@ -156,6 +157,7 @@ const saveEduData = () => {
 		eduData.push({ id, school: eduSchool, degree: eduRoleLvl, start: eduStart, end: eduEnd })
 	})
 	localStorage.setItem('eduData', JSON.stringify(eduData))
+	generateUserEdu();
 }
 const loadEduData = () => {
 	const savedData = JSON.parse(localStorage.getItem('eduData')) || []
@@ -218,6 +220,7 @@ const saveLangData = () => {
 		langData.push({ id, language: langName, level: langLevel })
 	})
 	localStorage.setItem('langData', JSON.stringify(langData))
+	generateUserLang()
 }
 const loadLangData = () => {
 	const savedData = JSON.parse(localStorage.getItem('langData')) || []
@@ -273,6 +276,7 @@ const saveSkillsData = () => {
 		skillsData.push({ id, skill: skill })
 	})
 	localStorage.setItem('skillsData', JSON.stringify(skillsData))
+	generateUserSkills()
 }
 const loadSkillData = () => {
 	const savedData = JSON.parse(localStorage.getItem('skillsData')) || []
@@ -289,21 +293,23 @@ const generateUserDataAbout = () => {
 	const formEmail = document.querySelector('#email')
 	const formTel = document.querySelector('#tel')
 	const formImg = document.querySelector('#img')
-	aboutPreviewContainer.innerHTML = ` 
-	<div class="img-preview-box">
-     	<img class="img-preview" src="${
-				formImg.value || 'https://petmex.pl/modules/blog/dataimages/Zdjecie-psa.jpg'
-			}" alt="">
-    </div>
-    <h2 class="cv-preview-title">Dane osobowe:</h2>
-    <p class="preview">Imię i Nazwisko:</p>
-    <p class="name-preview left">${formName.value + ' ' + formLastName.value || ''}</p>
-    <p class="preview">Email:</p>
-    <p class="email-preview left">${formEmail.value || ''}</p>
-    <p class="preview">Telefon:</p>
-    <p class="tel-preview left">${formTel.value || ''}</p>  `
+	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value;
+	const hasImage = formImg.value;
+	
+	aboutPreviewContainer.innerHTML = hasData || hasImage ? ` 
+		${hasImage ? `
+		<div class="img-preview-box">
+			<img class="img-preview" src="${formImg.value || 'https://petmex.pl/modules/blog/dataimages/Zdjecie-psa.jpg'}" alt="">
+		</div>` : ''}
+		
+		${hasData ? `
+		<h2 class="cv-preview-title">Dane osobowe:</h2>
+		${formName.value || formLastName.value ? `<p class="preview">Imię i Nazwisko:</p>` : ''}
+		${formName.value || formLastName.value ? `<p class="name-preview left">${formName.value + ' ' + formLastName.value}</p>` : ''}
+		${formEmail.value ? `<p class="preview">Email:</p><p class="email-preview left">${formEmail.value}</p>` : ''}
+		${formTel.value ? `<p class="preview">Telefon:</p><p class="tel-preview left">${formTel.value}</p>` : ''}` : ''}
+	` : ''
 
-	console.log(formImg.value)
 }
 
 const saveFormsDataAbout = () => {
