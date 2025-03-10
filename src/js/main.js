@@ -224,7 +224,7 @@ const loadLangData = () => {
 	savedData.forEach(data => {
 		createLanguage(data)
 	})
-	generateUserLang() 
+	generateUserLang()
 }
 
 const createSkills = (data = {}) => {
@@ -283,42 +283,50 @@ const loadSkillData = () => {
 }
 
 const generateUserDataAbout = () => {
-	const userName = document.querySelector('.name-preview')
-	const userEmail = document.querySelector('.email-preview')
-	const userTel = document.querySelector('.tel-preview')
+	const aboutPreviewContainer = document.querySelector('.cv-preview-about')
 	const formName = document.querySelector('#name')
 	const formLastName = document.querySelector('#last-name')
 	const formEmail = document.querySelector('#email')
 	const formTel = document.querySelector('#tel')
+	const formImg = document.querySelector('#img')
+	aboutPreviewContainer.innerHTML = ` 
+	<div class="img-preview-box">
+     	<img class="img-preview" src="${
+				formImg.value || 'https://petmex.pl/modules/blog/dataimages/Zdjecie-psa.jpg'
+			}" alt="">
+    </div>
+    <h2 class="cv-preview-title">Dane osobowe:</h2>
+    <p class="preview">Imię i Nazwisko:</p>
+    <p class="name-preview left">${formName.value + ' ' + formLastName.value || ''}</p>
+    <p class="preview">Email:</p>
+    <p class="email-preview left">${formEmail.value || ''}</p>
+    <p class="preview">Telefon:</p>
+    <p class="tel-preview left">${formTel.value || ''}</p>  `
 
-	if (userName && formName && formLastName) {
-		userName.textContent = `${formName.value} ${formLastName.value}`.trim()
-	}
-	if (userEmail && formEmail) {
-		userEmail.textContent = formEmail.value
-	}
-	if (userTel && formTel) {
-		userTel.textContent = formTel.value
-	}
+	console.log(formImg.value)
 }
+
 const saveFormsDataAbout = () => {
-	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
+	const inputs = document.querySelectorAll(
+		'[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]'
+	)
 	inputs.forEach(input => {
 		localStorage.setItem(input.name, input.value)
 	})
 	generateUserDataAbout()
 }
 const loadFormsUserAbout = () => {
-	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]')
+	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"] ')
 	inputs.forEach(input => {
 		input.value = localStorage.getItem(input.name) || ''
 	})
 	generateUserDataAbout()
 }
-document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"]').forEach(input => {
-	input.addEventListener('input', saveFormsDataAbout)
-})
-
+document
+	.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]')
+	.forEach(input => {
+		input.addEventListener('input', saveFormsDataAbout)
+	})
 
 const generatePreview = () => {
 	generateUserDataAbout()
