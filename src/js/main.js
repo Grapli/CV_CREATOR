@@ -157,7 +157,7 @@ const saveEduData = () => {
 		eduData.push({ id, school: eduSchool, degree: eduRoleLvl, start: eduStart, end: eduEnd })
 	})
 	localStorage.setItem('eduData', JSON.stringify(eduData))
-	generateUserEdu();
+	generateUserEdu()
 }
 const loadEduData = () => {
 	const savedData = JSON.parse(localStorage.getItem('eduData')) || []
@@ -293,23 +293,37 @@ const generateUserDataAbout = () => {
 	const formEmail = document.querySelector('#email')
 	const formTel = document.querySelector('#tel')
 	const formImg = document.querySelector('#img')
-	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value;
-	const hasImage = formImg.value;
-	
-	aboutPreviewContainer.innerHTML = hasData || hasImage ? ` 
-		${hasImage ? `
+	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value
+	const hasImage = formImg.value
+
+	aboutPreviewContainer.innerHTML =
+		hasData || hasImage
+			? ` 
+		${
+			hasImage
+				? `
 		<div class="img-preview-box">
 			<img class="img-preview" src="${formImg.value || 'https://petmex.pl/modules/blog/dataimages/Zdjecie-psa.jpg'}" alt="">
-		</div>` : ''}
+		</div>`
+				: ''
+		}
 		
-		${hasData ? `
+		${
+			hasData
+				? `
 		<h2 class="cv-preview-title">Dane osobowe:</h2>
 		${formName.value || formLastName.value ? `<p class="preview">Imię i Nazwisko:</p>` : ''}
-		${formName.value || formLastName.value ? `<p class="name-preview left">${formName.value + ' ' + formLastName.value}</p>` : ''}
+		${
+			formName.value || formLastName.value
+				? `<p class="name-preview left">${formName.value + ' ' + formLastName.value}</p>`
+				: ''
+		}
 		${formEmail.value ? `<p class="preview">Email:</p><p class="email-preview left">${formEmail.value}</p>` : ''}
-		${formTel.value ? `<p class="preview">Telefon:</p><p class="tel-preview left">${formTel.value}</p>` : ''}` : ''}
-	` : ''
-
+		${formTel.value ? `<p class="preview">Telefon:</p><p class="tel-preview left">${formTel.value}</p>` : ''}`
+				: ''
+		}
+	`
+			: ''
 }
 
 const saveFormsDataAbout = () => {
@@ -342,10 +356,12 @@ const generatePreview = () => {
 	generateUserSkills()
 }
 const clearAll = () => {
+	localStorage.clear()
 	const previewJob = document.querySelector('.cv-preview-job')
 	const previewEdu = document.querySelector('.cv-preview-edu')
 	const previewLang = document.querySelector('.cv-preview-lang')
 	const previewSkills = document.querySelector('.cv-preview-skills')
+	const previewAbout = document.querySelector('.cv-preview-about')
 	const skillForms = document.querySelectorAll('.skills-form')
 	const eduForms = document.querySelectorAll('.edu-form')
 	const langForms = document.querySelectorAll('.language-form')
@@ -354,6 +370,7 @@ const clearAll = () => {
 	previewEdu.textContent = ''
 	previewLang.textContent = ''
 	previewSkills.textContent = ''
+	previewAbout.textContent = ''
 	skillForms.forEach(form => form.remove())
 	eduForms.forEach(form => form.remove())
 	langForms.forEach(form => form.remove())
@@ -373,7 +390,6 @@ const clearAll = () => {
 	formLastName.value = ''
 	formEmail.value = ''
 	formTel.value = ''
-	localStorage.clear()
 }
 //LocalStorage
 const loadLocalStorage = () => {
@@ -399,7 +415,7 @@ jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
-btnGenerate.addEventListener('click', generatePreview)
+// btnGenerate.addEventListener('click', generatePreview)
 btnDeleteAll.addEventListener('click', clearAll)
 downloadBtn.addEventListener('click', downloadPdf)
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
