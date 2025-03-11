@@ -2,7 +2,6 @@ const jobBtn = document.querySelector('.job-button')
 const eduBtn = document.querySelector('.edu-button')
 const langBtn = document.querySelector('.language-button')
 const skillBtn = document.querySelector('.skills-button')
-const btnGenerate = document.querySelector('.btn-generate')
 const btnDeleteAll = document.querySelector('.btn-delete-all')
 const downloadBtn = document.querySelector('.download')
 
@@ -241,7 +240,6 @@ const loadLangData = () => {
 	})
 	generateUserLang()
 }
-
 const createSkills = (data = {}) => {
 	const skillsContainer = document.querySelector('.cv-box-skills')
 	const form = document.createElement('form')
@@ -299,7 +297,6 @@ const loadSkillData = () => {
 	})
 	generateUserSkills()
 }
-
 const generateUserDataAbout = () => {
 	const aboutPreviewContainer = document.querySelector('.cv-preview-about')
 	const formName = document.querySelector('#name')
@@ -321,7 +318,6 @@ const generateUserDataAbout = () => {
 		</div>`
 				: ''
 		}
-		
 		${
 			hasData
 				? `
@@ -339,7 +335,6 @@ const generateUserDataAbout = () => {
 	`
 			: ''
 }
-
 const saveFormsDataAbout = () => {
 	const inputs = document.querySelectorAll(
 		'[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]'
@@ -361,7 +356,6 @@ document
 	.forEach(input => {
 		input.addEventListener('input', saveFormsDataAbout)
 	})
-
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
@@ -413,23 +407,11 @@ const loadLocalStorage = () => {
 	loadJobData()
 	loadSkillData()
 }
-const downloadPdf = () => {
-	const element = document.getElementById('preview-id')
-	const options = {
-		margin: 10,
-		filename: 'Moje_CV.pdf',
-		image: { type: 'jpeg', quality: 0.98 },
-		html2canvas: { scale: 2, useCORS: true },
-		jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-	}
-	html2pdf().set(options).from(element).save()
-}
+
 
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
-// btnGenerate.addEventListener('click', generatePreview)
 btnDeleteAll.addEventListener('click', clearAll)
-downloadBtn.addEventListener('click', downloadPdf)
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
