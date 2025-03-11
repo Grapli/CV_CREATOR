@@ -38,8 +38,10 @@ const createJob = (data = {}) => {
 }
 const generateUserJob = () => {
 	const previewJob = document.querySelector('.cv-preview-job')
-	previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
 	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
+	if (savedData.length > 0) {
+		previewJob.innerHTML = '<h2 class="cv-preview-job-title">Doświadczenie:</h2>'
+	}
 	savedData.forEach(data => {
 		const jobBox = document.createElement('div')
 		jobBox.classList.add('preview-job-box')
@@ -81,6 +83,8 @@ const saveJobData = () => {
 		jobData.push({ id, company: jobName, role: jobRole, start: jobStart, end: jobEnd, description: jobDescription })
 	})
 	localStorage.setItem('jobData', JSON.stringify(jobData))
+	const previewJob = document.querySelector('.cv-preview-job')
+	previewJob.innerHTML = ''
 	generateUserJob()
 }
 const loadJobData = () => {
@@ -117,8 +121,10 @@ const createEduForm = (data = {}) => {
 }
 const generateUserEdu = () => {
 	const previewEdu = document.querySelector('.cv-preview-edu')
-	previewEdu.innerHTML = '<h2 class="cv-preview-edu-title">Edukacja:</h2>'
 	const savedData = JSON.parse(localStorage.getItem('eduData')) || []
+	if (savedData.length > 0) {
+		previewEdu.innerHTML = '<h2 class="cv-preview-edu-title">Edukacja:</h2>'
+	}
 	savedData.forEach(data => {
 		const eduBox = document.createElement('div')
 		eduBox.classList.add('preview-edu-box')
@@ -157,6 +163,8 @@ const saveEduData = () => {
 		eduData.push({ id, school: eduSchool, degree: eduRoleLvl, start: eduStart, end: eduEnd })
 	})
 	localStorage.setItem('eduData', JSON.stringify(eduData))
+	const previewEdu = document.querySelector('.cv-preview-edu')
+	previewEdu.innerHTML = ''
 	generateUserEdu()
 }
 const loadEduData = () => {
@@ -191,8 +199,10 @@ const createLanguage = (data = {}) => {
 }
 const generateUserLang = () => {
 	const previewLang = document.querySelector('.cv-preview-lang')
-	previewLang.innerHTML = '<h2 class="cv-preview-title">Języki:</h2>'
 	const savedData = JSON.parse(localStorage.getItem('langData')) || []
+	if (savedData.length > 0) {
+		previewLang.innerHTML = '<h2 class="cv-preview-title">Języki:</h2>'
+	}
 	savedData.forEach(data => {
 		const langBox = document.createElement('div')
 		langBox.classList.add('preview-lang-box')
@@ -220,6 +230,8 @@ const saveLangData = () => {
 		langData.push({ id, language: langName, level: langLevel })
 	})
 	localStorage.setItem('langData', JSON.stringify(langData))
+	const previewLang = document.querySelector('.cv-preview-lang')
+	previewLang.innerHTML = ''
 	generateUserLang()
 }
 const loadLangData = () => {
@@ -253,9 +265,9 @@ const createSkills = (data = {}) => {
 }
 const generateUserSkills = () => {
 	const previewSkills = document.querySelector('.cv-preview-skills')
-	previewSkills.innerHTML = ' <h2 class="cv-preview-skills-title">Umiejętności:</h2>'
 	const savedData = JSON.parse(localStorage.getItem('skillsData')) || []
 	if (savedData.length > 0) {
+		previewSkills.innerHTML = ' <h2 class="cv-preview-skills-title">Umiejętności:</h2>'
 		const skillList = document.createElement('ul')
 		skillList.classList.add('preview-skill-list')
 		savedData.forEach(data => {
@@ -276,6 +288,8 @@ const saveSkillsData = () => {
 		skillsData.push({ id, skill: skill })
 	})
 	localStorage.setItem('skillsData', JSON.stringify(skillsData))
+	const previewSkills = document.querySelector('.cv-preview-skills')
+	previewSkills.innerHTML = ''
 	generateUserSkills()
 }
 const loadSkillData = () => {
@@ -378,7 +392,7 @@ const clearAll = () => {
 	const userName = document.querySelector('.name-preview')
 	const userEmail = document.querySelector('.email-preview')
 	const userTel = document.querySelector('.tel-preview')
-	const userImg = document.querySelector('.img-preview')
+	// const userImg = document.querySelector('.img-preview')
 	userName.textContent = ''
 	userEmail.textContent = ''
 	userTel.textContent = ''
