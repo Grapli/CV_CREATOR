@@ -386,10 +386,10 @@ const clearAll = () => {
 	const userName = document.querySelector('.name-preview')
 	const userEmail = document.querySelector('.email-preview')
 	const userTel = document.querySelector('.tel-preview')
-	// const userImg = document.querySelector('.img-preview')
-	userName.textContent = ''
-	userEmail.textContent = ''
-	userTel.textContent = ''
+	const userImg = document.querySelector('.img-preview')
+    if (userName) userName.textContent = '';
+    if (userEmail) userEmail.textContent = '';
+    if (userTel) userTel.textContent = '';
 	const formName = document.querySelector('#name')
 	const formLastName = document.querySelector('#last-name')
 	const formEmail = document.querySelector('#email')

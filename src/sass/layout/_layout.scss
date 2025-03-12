@@ -75,6 +75,8 @@
 	text-align: left;
 	margin-top: 0.2em;
 	max-width: 100%;
+	overflow: hidden;
+
 }
 //preview lang
 .cv-preview-lang {
@@ -89,7 +91,7 @@
 .preview-lang-lvl {
 	margin: 0.1em 0.5em;
 }
-// preview edu 
+// preview edu
 .cv-preview-edu {
 	margin-left: 5px;
 }
@@ -101,9 +103,9 @@
 	margin-top: 0.2em;
 }
 //preview skills
-.cv-preview-skills{
+.cv-preview-skills {
 	margin-left: 5px;
 }
-.preview-skill-list{
+.preview-skill-list {
 	margin-left: 18px;
 }
