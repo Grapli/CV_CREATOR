@@ -298,15 +298,13 @@ const loadSkillData = () => {
 	generateUserSkills()
 }
 const generateUserDataAbout = () => {
-	const aboutPreviewContainer = document.querySelector('.cv-preview-about');
-	const formName = document.querySelector('#name');
-	const formLastName = document.querySelector('#last-name');
-	const formEmail = document.querySelector('#email');
-	const formTel = document.querySelector('#tel');
-	const formImg = document.querySelector('#img');
-	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value;
-	const hasImage = localStorage.getItem('img');  // Odczytujemy zdjęcie z localStorage
-
+	const aboutPreviewContainer = document.querySelector('.cv-preview-about')
+	const formName = document.querySelector('#name')
+	const formLastName = document.querySelector('#last-name')
+	const formEmail = document.querySelector('#email')
+	const formTel = document.querySelector('#tel')
+	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value
+	const hasImage = localStorage.getItem('img')
 	aboutPreviewContainer.innerHTML =
 		hasData || hasImage
 			? ` 
@@ -333,28 +331,27 @@ const generateUserDataAbout = () => {
 				: ''
 		}
 	`
-			: '';
-};
+			: ''
+}
 const saveFormsDataAbout = () => {
 	const inputs = document.querySelectorAll(
 		'[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]'
-	);
+	)
 
 	inputs.forEach(input => {
-		// Jeśli pole "img" zawiera plik, używamy FileReadera, by zapisać ścieżkę do lokalnego obrazu
 		if (input.name === 'img' && input.files && input.files[0]) {
-			const reader = new FileReader();
+			const reader = new FileReader()
 			reader.onload = function (e) {
-				localStorage.setItem(input.name, e.target.result); // Zapisujemy obraz do localStorage jako URL
-				generateUserDataAbout(); // Odświeżamy podgląd
-			};
-			reader.readAsDataURL(input.files[0]); // Odczytujemy plik jako URL
+				localStorage.setItem(input.name, e.target.result) //
+				generateUserDataAbout()
+			}
+			reader.readAsDataURL(input.files[0])
 		} else {
-			localStorage.setItem(input.name, input.value); // Zapisujemy inne dane
+			localStorage.setItem(input.name, input.value)
 		}
-	});
-	generateUserDataAbout();
-};
+	})
+	generateUserDataAbout()
+}
 const loadFormsUserAbout = () => {
 	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"] ')
 	inputs.forEach(input => {
