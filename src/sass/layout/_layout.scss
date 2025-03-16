@@ -76,13 +76,10 @@
 	margin-top: 0.2em;
 	max-width: 100%;
 	overflow: hidden;
-
 }
 //preview lang
 .cv-preview-lang {
 	grid-column: 1/1;
-	// grid-column: 1/2;
-	background-color: $gray;
 }
 .preview-lang-box {
 	display: flex;
@@ -108,4 +105,21 @@
 }
 .preview-skill-list {
 	margin-left: 18px;
+}
+.box-tools {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: $accent;
+	margin: 0 0.5em;
+	height: 100px;
+}
+.color-picker {
+	margin: 0 1em;
+	color: white;
+}
+.color-input {
+	width: 30px;
+	height: 30px;
+	border: none;
 }

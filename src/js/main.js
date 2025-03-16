@@ -387,9 +387,9 @@ const clearAll = () => {
 	const userEmail = document.querySelector('.email-preview')
 	const userTel = document.querySelector('.tel-preview')
 	const userImg = document.querySelector('.img-preview')
-    if (userName) userName.textContent = '';
-    if (userEmail) userEmail.textContent = '';
-    if (userTel) userTel.textContent = '';
+	if (userName) userName.textContent = ''
+	if (userEmail) userEmail.textContent = ''
+	if (userTel) userTel.textContent = ''
 	const formName = document.querySelector('#name')
 	const formLastName = document.querySelector('#last-name')
 	const formEmail = document.querySelector('#email')
@@ -398,6 +398,17 @@ const clearAll = () => {
 	formLastName.value = ''
 	formEmail.value = ''
 	formTel.value = ''
+	const inputColor = document.querySelector('#colorPicker')
+	const leftPreview = document.querySelector('.left-side')
+	leftPreview.style.backgroundColor = '#dfdfdf'
+	inputColor.value = '#dfdfdf'
+}
+const changeColor = () => {
+	const inputColor = document.querySelector('#colorPicker')
+	const leftPreview = document.querySelector('.left-side')
+	leftPreview.style.backgroundColor = inputColor.value
+
+	localStorage.setItem('savedColor', inputColor.value)
 }
 //LocalStorage
 const loadLocalStorage = () => {
@@ -406,8 +417,14 @@ const loadLocalStorage = () => {
 	loadLangData()
 	loadJobData()
 	loadSkillData()
-}
-
+	const inputColor = document.querySelector('#colorPicker');
+    const savedColor = localStorage.getItem('savedColor');
+    if (savedColor) {
+        document.querySelector('.left-side').style.backgroundColor = savedColor;
+        inputColor.value = savedColor;
+    }
+    inputColor.addEventListener('input', changeColor);
+};
 
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
@@ -415,3 +432,4 @@ langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnDeleteAll.addEventListener('click', clearAll)
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
+
