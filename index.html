@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="./dist/css/main.min.css">
 </head>
+
 <body>
     <div class="container">
         <div class="cv-box cv-box-about">
@@ -21,8 +23,8 @@
             <form class="about-form" action="">
                 <label for="name">Imię:</label>
                 <input type="text" id="name" name="name" placeholder="np. Jan">
-                <label for="last-name">Nazwisko:</label>
-                <input type="text" id="last-name" name="last-name" placeholder="np. Kowalski">
+                <label for="lastName">Nazwisko:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="np. Kowalski">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" placeholder="np. jan.kowalski@gmail.com">
                 <label for="tel">Tel:</label>
@@ -66,7 +68,6 @@
         <div class="box-tools">
             <label class="color-picker" for="colorPicker">Wybierz kolor:</label>
             <input type="color" id="colorPicker" value="#dfdfdf" class="color-input" name="colorPicker">
-            <button></button>
         </div>
         <div class="box-buttons">
             <button class="download button btn">Pobierz PDF</button>
@@ -86,6 +87,9 @@
                 <div class="cv-preview-skills"></div>
             </div>
         </div>
+
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.24/jspdf.autotable.min.js"></script>
         <script src="./dist/js/main.min.js"></script>
 </body>
 

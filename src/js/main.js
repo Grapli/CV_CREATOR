@@ -299,68 +299,75 @@ const loadSkillData = () => {
 }
 const generateUserDataAbout = () => {
 	const aboutPreviewContainer = document.querySelector('.cv-preview-about')
-	const formName = document.querySelector('#name')
-	const formLastName = document.querySelector('#last-name')
-	const formEmail = document.querySelector('#email')
-	const formTel = document.querySelector('#tel')
-	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value
-	const hasImage = localStorage.getItem('img')
+	const userData = JSON.parse(localStorage.getItem('userData')) || {}
+	const hasData = userData.name || userData.lastName || userData.email || userData.tel
+	const hasImage = userData.img
+
 	aboutPreviewContainer.innerHTML =
 		hasData || hasImage
 			? ` 
 		${
 			hasImage
-				? `
+				? ` 
 		<div class="img-preview-box">
-			<img class="img-preview" src="${localStorage.getItem('img')}" alt="Podgląd zdjęcia">
+			<img class="img-preview" src="${userData.img}" alt="Podgląd zdjęcia">
 		</div>`
 				: ''
 		}
 		${
 			hasData
-				? `
+				? ` 
 		<h2 class="cv-preview-title">Dane osobowe:</h2>
-		${formName.value || formLastName.value ? `<p class="preview">Imię i Nazwisko:</p>` : ''}
+		${userData.name || userData.lastName ? `<p class="preview">Imię i Nazwisko:</p>` : ''} 
 		${
-			formName.value || formLastName.value
-				? `<p class="name-preview left">${formName.value + ' ' + formLastName.value}</p>`
+			userData.name || userData.lastName
+				? `<p class="name-preview left">${userData.name + ' ' + userData.lastName}</p>`
 				: ''
 		}
-		${formEmail.value ? `<p class="preview">Email:</p><p class="email-preview left">${formEmail.value}</p>` : ''}
-		${formTel.value ? `<p class="preview">Telefon:</p><p class="tel-preview left">${formTel.value}</p>` : ''}`
+		${userData.email ? `<p class="preview">Email:</p><p class="email-preview left">${userData.email}</p>` : ''} 
+		${userData.tel ? `<p class="preview">Telefon:</p><p class="tel-preview left">${userData.tel}</p>` : ''}`
 				: ''
 		}
 	`
 			: ''
 }
+
 const saveFormsDataAbout = () => {
 	const inputs = document.querySelectorAll(
-		'[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]'
+		'[name="name"], [name="lastName"], [name="email"], [name="tel"], [name="img"]'
 	)
+	const userData = {}
 
 	inputs.forEach(input => {
 		if (input.name === 'img' && input.files && input.files[0]) {
 			const reader = new FileReader()
 			reader.onload = function (e) {
-				localStorage.setItem(input.name, e.target.result) //
+				userData[input.name] = e.target.result
+				localStorage.setItem('userData', JSON.stringify(userData))
 				generateUserDataAbout()
 			}
 			reader.readAsDataURL(input.files[0])
 		} else {
-			localStorage.setItem(input.name, input.value)
+			userData[input.name] = input.value
 		}
 	})
+	// Save all form data as a single object in localStorage
+	localStorage.setItem('userData', JSON.stringify(userData))
 	generateUserDataAbout()
 }
+
 const loadFormsUserAbout = () => {
-	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"] ')
+	const userData = JSON.parse(localStorage.getItem('userData')) || {}
+
+	const inputs = document.querySelectorAll('[name="name"], [name="lastName"], [name="email"], [name="tel"] ')
 	inputs.forEach(input => {
-		input.value = localStorage.getItem(input.name) || ''
+		input.value = userData[input.name] || ''
 	})
 	generateUserDataAbout()
 }
+
 document
-	.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]')
+	.querySelectorAll('[name="name"], [name="lastName"], [name="email"], [name="tel"], [name="img"]')
 	.forEach(input => {
 		input.addEventListener('input', saveFormsDataAbout)
 	})
@@ -399,7 +406,7 @@ const clearAll = () => {
 	if (userEmail) userEmail.textContent = ''
 	if (userTel) userTel.textContent = ''
 	const formName = document.querySelector('#name')
-	const formLastName = document.querySelector('#last-name')
+	const formLastName = document.querySelector('#lastName')
 	const formEmail = document.querySelector('#email')
 	const formTel = document.querySelector('#tel')
 	formName.value = ''
@@ -434,9 +441,90 @@ const loadLocalStorage = () => {
 	inputColor.addEventListener('input', changeColor)
 }
 
+// Download PDF
+const langData = JSON.parse(localStorage.getItem('langData')) || [];
+const jobData = JSON.parse(localStorage.getItem('jobData')) || [];
+const eduData = JSON.parse(localStorage.getItem('eduData')) || [];
+const skillsData = JSON.parse(localStorage.getItem('skillsData')) || [];
+const userData = JSON.parse(localStorage.getItem('userData')) || [];
+
+const allData = {
+	user: userData,
+	job: jobData,
+	edu: eduData,
+	skills: skillsData,
+	lang: langData,
+}
+
+const generatePDF = data => {
+	const { jsPDF } = window.jspdf
+	const doc = new jsPDF()
+
+	const savedColor = localStorage.getItem('savedColor') || '#000000'
+
+     // Dane osobowe
+	 doc.setFontSize(14)
+	 doc.text('Dane osobowe:', 10, 30)
+	 doc.setFontSize(12)
+	 doc.text(`Imię i Nazwisko: ${data.user.name} + ${data.user.lastName}`, 10, 40)
+	 doc.text(`Email: ${data.user.email}`, 10, 50)
+	 doc.text(`Telefon: ${data.user.tel}`, 10, 60)
+
+ 
+	 // Języki
+	 doc.setFontSize(14)
+	 doc.text('Języki:', 10, 75)
+	 doc.setFontSize(12)
+	 let y = 85
+	 data.lang.forEach(lang => {
+		 doc.text(`${lang.name} - ${lang.level}`, 10, y)
+		 y += 10
+	 })
+ 
+	 // Doświadczenie
+	 doc.setFontSize(14)
+	 doc.text('Doświadczenie:', 10, y + 10)
+	 y += 20
+	 data.job.forEach(job => {
+		 doc.setFontSize(12)
+		 doc.text(`${job.company}`, 10, y)
+		 doc.setFontSize(10)
+		 doc.text(`${job.start} (${job.end})`, 10, y + 7)
+		 doc.setFontSize(9)
+		 doc.text(job.description, 10, y + 14, { maxWidth: 180 })
+		 y += 30
+	 })
+ 
+	 // Edukacja
+	 doc.setFontSize(14)
+	 doc.text('Edukacja:', 10, y)
+	 y += 10
+	 data.edu.forEach(school => {
+		 doc.setFontSize(12)
+		 doc.text(`${school.school}`, 10, y)
+		 doc.setFontSize(10)
+		 doc.text(`${school.start} (${school.end})`, 10, y + 7)
+		 y += 15
+	 })
+ 
+	//  // Umiejętności
+	//  doc.setFontSize(14)
+	//  doc.text('Umiejętności:', 10, y)
+	//  y += 10
+	//  autoTable(doc, {
+	// 	 startY: y,
+	// 	 head: [['Umiejętność']],
+	// 	 body: data.skills.map(skill => [skill]),
+	// 	 theme: 'grid',
+	//  })
+ 
+	 doc.save('cv.pdf')
+ }
+
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
 langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnDeleteAll.addEventListener('click', clearAll)
+downloadBtn.addEventListener('click', generatePDF.bind(null, allData))
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
