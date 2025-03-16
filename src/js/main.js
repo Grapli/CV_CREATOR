@@ -298,14 +298,14 @@ const loadSkillData = () => {
 	generateUserSkills()
 }
 const generateUserDataAbout = () => {
-	const aboutPreviewContainer = document.querySelector('.cv-preview-about')
-	const formName = document.querySelector('#name')
-	const formLastName = document.querySelector('#last-name')
-	const formEmail = document.querySelector('#email')
-	const formTel = document.querySelector('#tel')
-	const formImg = document.querySelector('#img')
-	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value
-	const hasImage = formImg.value
+	const aboutPreviewContainer = document.querySelector('.cv-preview-about');
+	const formName = document.querySelector('#name');
+	const formLastName = document.querySelector('#last-name');
+	const formEmail = document.querySelector('#email');
+	const formTel = document.querySelector('#tel');
+	const formImg = document.querySelector('#img');
+	const hasData = formName.value || formLastName.value || formEmail.value || formTel.value;
+	const hasImage = localStorage.getItem('img');  // Odczytujemy zdjęcie z localStorage
 
 	aboutPreviewContainer.innerHTML =
 		hasData || hasImage
@@ -314,7 +314,7 @@ const generateUserDataAbout = () => {
 			hasImage
 				? `
 		<div class="img-preview-box">
-			<img class="img-preview" src="${formImg.value || 'https://petmex.pl/modules/blog/dataimages/Zdjecie-psa.jpg'}" alt="">
+			<img class="img-preview" src="${localStorage.getItem('img')}" alt="Podgląd zdjęcia">
 		</div>`
 				: ''
 		}
@@ -333,17 +333,28 @@ const generateUserDataAbout = () => {
 				: ''
 		}
 	`
-			: ''
-}
+			: '';
+};
 const saveFormsDataAbout = () => {
 	const inputs = document.querySelectorAll(
 		'[name="name"], [name="last-name"], [name="email"], [name="tel"], [name="img"]'
-	)
+	);
+
 	inputs.forEach(input => {
-		localStorage.setItem(input.name, input.value)
-	})
-	generateUserDataAbout()
-}
+		// Jeśli pole "img" zawiera plik, używamy FileReadera, by zapisać ścieżkę do lokalnego obrazu
+		if (input.name === 'img' && input.files && input.files[0]) {
+			const reader = new FileReader();
+			reader.onload = function (e) {
+				localStorage.setItem(input.name, e.target.result); // Zapisujemy obraz do localStorage jako URL
+				generateUserDataAbout(); // Odświeżamy podgląd
+			};
+			reader.readAsDataURL(input.files[0]); // Odczytujemy plik jako URL
+		} else {
+			localStorage.setItem(input.name, input.value); // Zapisujemy inne dane
+		}
+	});
+	generateUserDataAbout();
+};
 const loadFormsUserAbout = () => {
 	const inputs = document.querySelectorAll('[name="name"], [name="last-name"], [name="email"], [name="tel"] ')
 	inputs.forEach(input => {
@@ -417,14 +428,14 @@ const loadLocalStorage = () => {
 	loadLangData()
 	loadJobData()
 	loadSkillData()
-	const inputColor = document.querySelector('#colorPicker');
-    const savedColor = localStorage.getItem('savedColor');
-    if (savedColor) {
-        document.querySelector('.left-side').style.backgroundColor = savedColor;
-        inputColor.value = savedColor;
-    }
-    inputColor.addEventListener('input', changeColor);
-};
+	const inputColor = document.querySelector('#colorPicker')
+	const savedColor = localStorage.getItem('savedColor')
+	if (savedColor) {
+		document.querySelector('.left-side').style.backgroundColor = savedColor
+		inputColor.value = savedColor
+	}
+	inputColor.addEventListener('input', changeColor)
+}
 
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
@@ -432,4 +443,3 @@ langBtn.addEventListener('click', createLanguage)
 skillBtn.addEventListener('click', createSkills)
 btnDeleteAll.addEventListener('click', clearAll)
 document.addEventListener('DOMContentLoaded', loadLocalStorage)
-
