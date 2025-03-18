@@ -473,7 +473,7 @@ const generatePDF = data => {
 
 
 	// Sekcja about
-	doc.addImage(`${data.user.img}`, 'JPEG', 15, 5, 30, 30)
+	doc.addImage(`${data.user.img}`, 'JPEG', 0, 0, 65, 55)
 
 	// doc.text('Dane osobowe:', 10, 30)
 	// doc.setFontSize(12)
