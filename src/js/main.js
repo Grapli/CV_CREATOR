@@ -442,56 +442,49 @@ const loadLocalStorage = () => {
 	inputColor.addEventListener('input', changeColor)
 }
 
-// Download PDF
-const langData = JSON.parse(localStorage.getItem('langData')) || []
-const jobData = JSON.parse(localStorage.getItem('jobData')) || []
-const eduData = JSON.parse(localStorage.getItem('eduData')) || []
-const skillsData = JSON.parse(localStorage.getItem('skillsData')) || []
-const userData = JSON.parse(localStorage.getItem('userData')) || []
-
-const allData = {
-	user: userData,
-	job: jobData,
-	edu: eduData,
-	skills: skillsData,
-	lang: langData,
-}
-
 const { jsPDF } = window.jspdf;
 
 function generatePDF() {
-    const element = document.querySelector('.cv-preview'); // Podgląd CV
+    const element = document.querySelector('.cv-preview'); 
 
-	domtoimage.toPng(element, { quality: 1 }) // Lepsza jakość
-	.then(imgData => {
-		const pdf = new jsPDF({
-			orientation: 'p',
-			unit: 'mm',
-			format: 'a4'
-		});
+    html2canvas(element, {
+        scale: 2, 
+        useCORS: true 
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
 
-		const pageWidth = pdf.internal.pageSize.getWidth();  // 210 mm
-		const pageHeight = pdf.internal.pageSize.getHeight(); // 297 mm
+        const pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
+        });
 
-		const elementWidth = element.offsetWidth;
-		const elementHeight = element.offsetHeight;
+        const pageWidth = pdf.internal.pageSize.getWidth(); 
+        const pageHeight = pdf.internal.pageSize.getHeight(); 
 
-		// Skalowanie proporcjonalne
-		let imgWidth = pageWidth;
-		let imgHeight = (elementHeight / elementWidth) * imgWidth;
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width; 
 
-		// 🔥 Jeśli obraz jest za wysoki, dopasuj go dokładnie do strony A4
-		if (imgHeight > pageHeight) {
-			imgHeight = pageHeight;
-			imgWidth = (elementWidth / elementHeight) * imgHeight;
-		}
+        let yPosition = 0; 
 
-		// 📌 Dodaj obraz od samej góry, bez marginesów
-		pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight, '', 'FAST');
+        
+        if (imgHeight > pageHeight) {
+            
+            while (yPosition < imgHeight) {
+                pdf.addImage(imgData, 'PNG', 0, -yPosition, imgWidth, imgHeight);
+                yPosition += pageHeight;
 
-		pdf.save('CV.pdf');
-	})
-	.catch(error => console.error('Błąd generowania obrazu:', error));
+               
+                if (yPosition < imgHeight) {
+                    pdf.addPage();
+                }
+            }
+        } else {
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        }
+
+        pdf.save('CV.pdf');
+    }).catch(error => console.error('Błąd generowania PDF:', error));
 }
 
 jobBtn.addEventListener('click', createJob)
