@@ -1,10 +1,41 @@
-// import { robotoBase64 } from './font.js'
 const jobBtn = document.querySelector('.job-button')
 const eduBtn = document.querySelector('.edu-button')
 const langBtn = document.querySelector('.language-button')
 const skillBtn = document.querySelector('.skills-button')
 const btnDeleteAll = document.querySelector('.btn-delete-all')
 const downloadBtn = document.querySelector('.download')
+
+// Form Validation
+const validateJobForm = (form) => {
+    let isValid = true;
+    const companyInput = form.querySelector('[name="company"]');
+    const roleInput = form.querySelector('[name="job-title"]');
+    const startDateInput = form.querySelector('[name="job-start"]');
+    const endDateInput = form.querySelector('[name="job-end"]');
+    const descriptionInput = form.querySelector('[name="job-description"]');
+    [companyInput, roleInput, startDateInput, endDateInput, descriptionInput].forEach(input => {
+        input.classList.remove('error');
+    });
+    if (companyInput.value.trim().length < 2) {
+        companyInput.classList.add('error');
+        isValid = false;
+    }
+    if (roleInput.value.trim().length < 2) {
+        roleInput.classList.add('error');
+        isValid = false;
+    }
+    if (startDateInput.value && endDateInput.value && startDateInput.value > endDateInput.value) {
+        startDateInput.classList.add('error');
+        endDateInput.classList.add('error');
+        isValid = false;
+    }
+    if (descriptionInput.value.trim().length > 0 && descriptionInput.value.trim().length < 10) {
+        descriptionInput.classList.add('error');
+        isValid = false;
+    }
+    return isValid;
+};
+
 
 const createJob = (data = {}) => {
 	const jobContainer = document.querySelector('.cv-box-job')
@@ -71,22 +102,34 @@ const generateUserJob = () => {
 	})
 }
 const saveJobData = () => {
-	const jobForms = document.querySelectorAll('.job-form')
-	let jobData = []
-	jobForms.forEach(form => {
-		const id = form.getAttribute('data-id') || Date.now().toString()
-		const jobName = form.querySelector('[name="company"]').value
-		const jobRole = form.querySelector('[name="job-title"]').value
-		const jobStart = form.querySelector('[name="job-start"]').value
-		const jobEnd = form.querySelector('[name="job-end"]').value
-		const jobDescription = form.querySelector('[name="job-description"]').value
-		jobData.push({ id, company: jobName, role: jobRole, start: jobStart, end: jobEnd, description: jobDescription })
-	})
-	localStorage.setItem('jobData', JSON.stringify(jobData))
-	const previewJob = document.querySelector('.cv-preview-job')
-	previewJob.innerHTML = ''
-	generateUserJob()
-}
+    const jobForms = document.querySelectorAll('.job-form');
+    let jobData = [];
+
+    jobForms.forEach(form => {
+        if (validateJobForm(form)) {
+            const id = form.getAttribute('data-id') || Date.now().toString();
+            const jobName = form.querySelector('[name="company"]').value;
+            const jobRole = form.querySelector('[name="job-title"]').value;
+            const jobStart = form.querySelector('[name="job-start"]').value;
+            const jobEnd = form.querySelector('[name="job-end"]').value;
+            const jobDescription = form.querySelector('[name="job-description"]').value;
+
+            jobData.push({
+                id,
+                company: jobName,
+                role: jobRole,
+                start: jobStart,
+                end: jobEnd,
+                description: jobDescription
+            });
+        }
+    });
+
+    localStorage.setItem('jobData', JSON.stringify(jobData));
+    const previewJob = document.querySelector('.cv-preview-job');
+    previewJob.innerHTML = '';
+    generateUserJob();
+};
 const loadJobData = () => {
 	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
 	savedData.forEach(data => {
@@ -303,7 +346,6 @@ const generateUserDataAbout = () => {
 	const userData = JSON.parse(localStorage.getItem('userData')) || {}
 	const hasData = userData.name || userData.lastName || userData.email || userData.tel
 	const hasImage = userData.img
-
 	aboutPreviewContainer.innerHTML =
 		hasData || hasImage
 			? ` 
@@ -332,13 +374,11 @@ const generateUserDataAbout = () => {
 	`
 			: ''
 }
-
 const saveFormsDataAbout = () => {
 	const inputs = document.querySelectorAll(
 		'[name="name"], [name="lastName"], [name="email"], [name="tel"], [name="img"]'
 	)
 	const userData = {}
-
 	inputs.forEach(input => {
 		if (input.name === 'img' && input.files && input.files[0]) {
 			const reader = new FileReader()
@@ -352,21 +392,17 @@ const saveFormsDataAbout = () => {
 			userData[input.name] = input.value
 		}
 	})
-	// Save all form data as a single object in localStorage
 	localStorage.setItem('userData', JSON.stringify(userData))
 	generateUserDataAbout()
 }
-
 const loadFormsUserAbout = () => {
 	const userData = JSON.parse(localStorage.getItem('userData')) || {}
-
 	const inputs = document.querySelectorAll('[name="name"], [name="lastName"], [name="email"], [name="tel"] ')
 	inputs.forEach(input => {
 		input.value = userData[input.name] || ''
 	})
 	generateUserDataAbout()
 }
-
 document
 	.querySelectorAll('[name="name"], [name="lastName"], [name="email"], [name="tel"], [name="img"]')
 	.forEach(input => {
@@ -441,40 +477,29 @@ const loadLocalStorage = () => {
 	}
 	inputColor.addEventListener('input', changeColor)
 }
-
+// PDF
 const { jsPDF } = window.jspdf;
-
 function generatePDF() {
     const element = document.querySelector('.cv-preview'); 
-
     html2canvas(element, {
         scale: 2, 
         useCORS: true 
     }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-
         const pdf = new jsPDF({
             orientation: 'p',
             unit: 'mm',
             format: 'a4'
         });
-
         const pageWidth = pdf.internal.pageSize.getWidth(); 
         const pageHeight = pdf.internal.pageSize.getHeight(); 
-
         const imgWidth = pageWidth;
         const imgHeight = (canvas.height * imgWidth) / canvas.width; 
-
-        let yPosition = 0; 
-
-        
-        if (imgHeight > pageHeight) {
-            
+        let yPosition = 0;      
+        if (imgHeight > pageHeight) {         
             while (yPosition < imgHeight) {
                 pdf.addImage(imgData, 'PNG', 0, -yPosition, imgWidth, imgHeight);
-                yPosition += pageHeight;
-
-               
+                yPosition += pageHeight;             
                 if (yPosition < imgHeight) {
                     pdf.addPage();
                 }
@@ -482,11 +507,9 @@ function generatePDF() {
         } else {
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
         }
-
         pdf.save('CV.pdf');
     }).catch(error => console.error('Błąd generowania PDF:', error));
 }
-
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
 langBtn.addEventListener('click', createLanguage)

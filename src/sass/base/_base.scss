@@ -16,7 +16,6 @@ body {
 	font-size: 1.6rem;
 	height: 100vh;
 }
-
 .container {
 	margin: 0 auto;
 	width: 100%;
@@ -84,4 +83,8 @@ h3 {
 }
 .padding-bottom {
 	padding-bottom: 1em;
+}
+.error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
 }
