@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreator CV</title>
+    <script src="https://kit.fontawesome.com/dc3100ff67.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="./dist/css/main.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="cv-box cv-box-about">
+            <div class="cv-box__title">
+                <h2 class="cv-box__title-title">Dane osobowe</h2>
+            </div>
+            <form class="about-form" action="">
+                <label for="name">Imię:</label>
+                <input type="text" id="name" name="name" placeholder="np. Jan">
+                <label for="lastName">Nazwisko:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="np. Kowalski">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="np. jan.kowalski@gmail.com">
+                <label for="tel">Tel:</label>
+                <input type="text" id="tel" name="tel" placeholder="np. 500-500-500">
+                <label for="img">Zdjęcie:</label>
+                <input type="file" id="img" name="img">
+            </form>
+        </div>
+        <div class="cv-box cv-box-job">
+            <div class="cv-box__title">
+                <h2 class="cv-box__title-title">Doświadczenie zawodowe</h2>
+            </div>
+            <div class="button-box">
+                <button class="button job-button">+</button>
+            </div>
+        </div>
+        <div class="cv-box cv-box-edu">
+            <div class="cv-box__title">
+                <h2 class="cv-box__title-title">Edukacja</h2>
+            </div>
+            <div class="button-box">
+                <button class="button edu-button">+</button>
+            </div>
+        </div>
+        <div class="cv-box cv-box-skills">
+            <div class="cv-box__title">
+                <h2 class="cv-box__title-title">Umiejętności</h2>
+            </div>
+            <div class="button-box">
+                <button class="button skills-button">+</button>
+            </div>
+        </div>
+        <div class="cv-box cv-box-lang">
+            <div class="cv-box__title">
+                <h2 class="cv-box__title-title">Języki</h2>
+            </div>
+            <div class="button-box">
+                <button class="button language-button">+</button>
+            </div>
+        </div>
+        <div class="box-tools">
+            <label class="color-picker" for="colorPicker">Wybierz kolor:</label>
+            <input type="color" id="colorPicker" value="#dfdfdf" class="color-input" name="colorPicker">
+        </div>
+        <div class="box-buttons">
+            <button class="download button btn">Pobierz PDF</button>
+            <button class="button btn btn-delete-all">Usuń wszystko</button>
+        </div>
+    </div>
+    <div class="container padding-bottom" id="preview-id">
+        <div class="cv-preview">
+            <div class="left-side">
+                <div class="cv-preview-about">
+                </div>
+                <div class="cv-preview-lang"></div>
+            </div>
+            <div class="right-side">
+                <div class="cv-preview-job"></div>
+                <div class="cv-preview-edu"></div>
+                <div class="cv-preview-skills"></div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="./dist/js/main.min.js" type="module"></script>
+</body>
+
+</html>

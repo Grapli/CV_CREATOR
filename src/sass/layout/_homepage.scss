@@ -1,0 +1,213 @@
+@use 'base/colors' as *;
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+html {
+	font-size: 62.5%;
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Poppins', serif;
+	background: $black;
+	font-size: 1.6rem;
+	height: 100vh;
+	width: 100%;
+	position: relative;
+}
+
+a {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-decoration: none;
+	color: $white;
+	text-transform: uppercase;
+	border: 1px solid white;
+	padding: 1em;
+	background-color: rgba(255, 255, 255, 0.5);
+	transition: color, 0.5s;
+}
+
+a:hover {
+	background-color: rgba(146, 146, 146, 0.5);
+}
+
+@keyframes spin-scale {
+	0% {
+		transform: rotate(0deg) scale(0.1);
+	}
+	50% {
+		transform: rotate(180deg) scale(0.3);
+	}
+	100% {
+		transform: rotate(360deg) scale(0.2);
+	}
+}
+@keyframes spin-scale-two {
+	0% {
+		transform: rotate(0deg) scale(0.1);
+	}
+	50% {
+		transform: rotate(-180deg) scale(0.3);
+	}
+	100% {
+		transform: rotate(-360deg) scale(0.2);
+	}
+}
+.icon {
+	position: absolute;
+	display: none;
+}
+.icon-two,
+.icon-four,
+.icon-seven,
+.icon-eight {
+	animation: spin-scale 31s infinite linear;
+}
+.icon-one,
+.icon-three,
+.icon-five,
+.icon-six {
+	animation: spin-scale-two 51s infinite linear;
+}
+
+// @media (min-width: 768px) {
+// 	.icon-one,
+// 	.icon-two,
+// 	.icon-three,
+// 	.icon-four {
+// 		display: none;
+// 	}
+// }
+
+@media (min-width: 280px) {
+	.icon-one {
+		display: block;
+		top: 5%;
+		right: -70px;
+	}
+	.icon-two {
+		display: block;
+		top: 50%;
+		right: -50px;
+	}
+}
+@media (min-width: 400px) {
+	.icon-one {
+		display: block;
+		top: 5%;
+		right: -70px;
+	}
+	.icon-two {
+		display: block;
+		top: 50%;
+		right: -50px;
+	}
+	.icon-four {
+		display: block;
+		top: -140px;
+		right: -70px;
+	}
+}
+@media (min-width: 480px) {
+	.icon-one {
+		display: block;
+		top: 5%;
+		right: -70px;
+	}
+	.icon-two {
+		display: block;
+		top: 50%;
+		right: -50px;
+	}
+	.icon-four {
+		display: block;
+		top: -140px;
+		right: -70px;
+	}
+	.icon-seven {
+		display: block;
+		top: 440px;
+		left: -145px;
+	}
+}
+@media (min-width: 560px) {
+	.icon-one {
+		display: block;
+		top: 5%;
+		right: -70px;
+	}
+	.icon-two {
+		display: block;
+		top: 50%;
+		right: -50px;
+	}
+	.icon-four {
+		display: block;
+		top: -140px;
+		right: -70px;
+	}
+	.icon-seven {
+		display: block;
+		top: 440px;
+		left: -145px;
+	}
+	.icon-five {
+		display: block;
+		top: 3%;
+		left: -13%;
+	}
+}
+
+@media (min-width: 900px) {
+	.icon {
+		display: block;
+	}
+	.icon-one {
+		position: absolute;
+		top: 5%;
+		left: 70%;
+	}
+	.icon-two {
+		position: absolute;
+		top: 45%;
+		left: 55%;
+	}
+	.icon-three {
+		position: absolute;
+		top: 35%;
+		left: 15%;
+	}
+
+	.icon-four {
+		position: absolute;
+		top: 3%;
+		left: 45%;
+	}
+	.icon-five {
+		position: absolute;
+		top: 4%;
+		left: 25%;
+	}
+	.icon-six {
+		position: absolute;
+		top: 50%;
+		left: 30%;
+	}
+	.icon-seven {
+		position: absolute;
+		top: 10%;
+		left: 60%;
+	}
+	.icon-eight {
+		position: absolute;
+		top: 20%;
+		left: 10%;
+	}
+}
