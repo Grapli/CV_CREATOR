@@ -232,10 +232,6 @@ const validateEduForm = form => {
 		schoolInput.classList.add('error')
 		isValid = false
 	}
-	if (degreeInput.value.trim().length < 2) {
-		degreeInput.classList.add('error')
-		isValid = false
-	}
 	if (startDateInput.value && endDateInput.value && startDateInput.value > endDateInput.value) {
 		startDateInput.classList.add('error')
 		endDateInput.classList.add('error')
