@@ -5,38 +5,6 @@ const skillBtn = document.querySelector('.skills-button')
 const btnDeleteAll = document.querySelector('.btn-delete-all')
 const downloadBtn = document.querySelector('.download')
 
-// Form Validation
-const validateJobForm = (form) => {
-    let isValid = true;
-    const companyInput = form.querySelector('[name="company"]');
-    const roleInput = form.querySelector('[name="job-title"]');
-    const startDateInput = form.querySelector('[name="job-start"]');
-    const endDateInput = form.querySelector('[name="job-end"]');
-    const descriptionInput = form.querySelector('[name="job-description"]');
-    [companyInput, roleInput, startDateInput, endDateInput, descriptionInput].forEach(input => {
-        input.classList.remove('error');
-    });
-    if (companyInput.value.trim().length < 2) {
-        companyInput.classList.add('error');
-        isValid = false;
-    }
-    if (roleInput.value.trim().length < 2) {
-        roleInput.classList.add('error');
-        isValid = false;
-    }
-    if (startDateInput.value && endDateInput.value && startDateInput.value > endDateInput.value) {
-        startDateInput.classList.add('error');
-        endDateInput.classList.add('error');
-        isValid = false;
-    }
-    if (descriptionInput.value.trim().length > 0 && descriptionInput.value.trim().length < 10) {
-        descriptionInput.classList.add('error');
-        isValid = false;
-    }
-    return isValid;
-};
-
-
 const createJob = (data = {}) => {
 	const jobContainer = document.querySelector('.cv-box-job')
 	const form = document.createElement('form')
@@ -102,34 +70,34 @@ const generateUserJob = () => {
 	})
 }
 const saveJobData = () => {
-    const jobForms = document.querySelectorAll('.job-form');
-    let jobData = [];
+	const jobForms = document.querySelectorAll('.job-form')
+	let jobData = []
 
-    jobForms.forEach(form => {
-        if (validateJobForm(form)) {
-            const id = form.getAttribute('data-id') || Date.now().toString();
-            const jobName = form.querySelector('[name="company"]').value;
-            const jobRole = form.querySelector('[name="job-title"]').value;
-            const jobStart = form.querySelector('[name="job-start"]').value;
-            const jobEnd = form.querySelector('[name="job-end"]').value;
-            const jobDescription = form.querySelector('[name="job-description"]').value;
+	jobForms.forEach(form => {
+		if (validateJobForm(form)) {
+			const id = form.getAttribute('data-id') || Date.now().toString()
+			const jobName = form.querySelector('[name="company"]').value
+			const jobRole = form.querySelector('[name="job-title"]').value
+			const jobStart = form.querySelector('[name="job-start"]').value
+			const jobEnd = form.querySelector('[name="job-end"]').value
+			const jobDescription = form.querySelector('[name="job-description"]').value
 
-            jobData.push({
-                id,
-                company: jobName,
-                role: jobRole,
-                start: jobStart,
-                end: jobEnd,
-                description: jobDescription
-            });
-        }
-    });
+			jobData.push({
+				id,
+				company: jobName,
+				role: jobRole,
+				start: jobStart,
+				end: jobEnd,
+				description: jobDescription,
+			})
+		}
+	})
 
-    localStorage.setItem('jobData', JSON.stringify(jobData));
-    const previewJob = document.querySelector('.cv-preview-job');
-    previewJob.innerHTML = '';
-    generateUserJob();
-};
+	localStorage.setItem('jobData', JSON.stringify(jobData))
+	const previewJob = document.querySelector('.cv-preview-job')
+	previewJob.innerHTML = ''
+	generateUserJob()
+}
 const loadJobData = () => {
 	const savedData = JSON.parse(localStorage.getItem('jobData')) || []
 	savedData.forEach(data => {
@@ -137,6 +105,36 @@ const loadJobData = () => {
 	})
 	generateUserJob()
 }
+const validateJobForm = form => {
+	let isValid = true
+	const companyInput = form.querySelector('[name="company"]')
+	const roleInput = form.querySelector('[name="job-title"]')
+	const startDateInput = form.querySelector('[name="job-start"]')
+	const endDateInput = form.querySelector('[name="job-end"]')
+	const descriptionInput = form.querySelector('[name="job-description"]')
+	;[companyInput, roleInput, startDateInput, endDateInput, descriptionInput].forEach(input => {
+		input.classList.remove('error')
+	})
+	if (companyInput.value.trim().length < 2) {
+		companyInput.classList.add('error')
+		isValid = false
+	}
+	if (roleInput.value.trim().length < 2) {
+		roleInput.classList.add('error')
+		isValid = false
+	}
+	if (startDateInput.value && endDateInput.value && startDateInput.value > endDateInput.value) {
+		startDateInput.classList.add('error')
+		endDateInput.classList.add('error')
+		isValid = false
+	}
+	if (descriptionInput.value.trim().length > 0 && descriptionInput.value.trim().length < 10) {
+		descriptionInput.classList.add('error')
+		isValid = false
+	}
+	return isValid
+}
+
 const createEduForm = (data = {}) => {
 	const eduContainer = document.querySelector('.cv-box-edu')
 	const form = document.createElement('form')
@@ -196,15 +194,19 @@ const generateUserEdu = () => {
 const saveEduData = () => {
 	const eduForms = document.querySelectorAll('.edu-form')
 	let eduData = []
+
 	eduForms.forEach(form => {
-		const id = form.getAttribute('data-id') || Date.now().toString()
-		form.setAttribute('data-id', id)
-		const eduSchool = form.querySelector('[name="school"]').value
-		const eduRoleLvl = form.querySelector('[name="degree"]').value
-		const eduStart = form.querySelector('[name="edu-start"]').value
-		const eduEnd = form.querySelector('[name="edu-end"]').value
-		eduData.push({ id, school: eduSchool, degree: eduRoleLvl, start: eduStart, end: eduEnd })
+		if (validateEduForm(form)) {
+			const id = form.getAttribute('data-id') || Date.now().toString()
+			form.setAttribute('data-id', id)
+			const eduSchool = form.querySelector('[name="school"]').value
+			const eduRoleLvl = form.querySelector('[name="degree"]').value
+			const eduStart = form.querySelector('[name="edu-start"]').value
+			const eduEnd = form.querySelector('[name="edu-end"]').value
+			eduData.push({ id, school: eduSchool, degree: eduRoleLvl, start: eduStart, end: eduEnd })
+		}
 	})
+
 	localStorage.setItem('eduData', JSON.stringify(eduData))
 	const previewEdu = document.querySelector('.cv-preview-edu')
 	previewEdu.innerHTML = ''
@@ -217,6 +219,31 @@ const loadEduData = () => {
 	})
 	generateUserEdu()
 }
+const validateEduForm = form => {
+	let isValid = true
+	const schoolInput = form.querySelector('[name="school"]')
+	const degreeInput = form.querySelector('[name="degree"]')
+	const startDateInput = form.querySelector('[name="edu-start"]')
+	const endDateInput = form.querySelector('[name="edu-end"]')
+	;[schoolInput, degreeInput, startDateInput, endDateInput].forEach(input => {
+		input.classList.remove('error')
+	})
+	if (schoolInput.value.trim().length < 2) {
+		schoolInput.classList.add('error')
+		isValid = false
+	}
+	if (degreeInput.value.trim().length < 2) {
+		degreeInput.classList.add('error')
+		isValid = false
+	}
+	if (startDateInput.value && endDateInput.value && startDateInput.value > endDateInput.value) {
+		startDateInput.classList.add('error')
+		endDateInput.classList.add('error')
+		isValid = false
+	}
+	return isValid
+}
+
 const createLanguage = (data = {}) => {
 	const langContainer = document.querySelector('.cv-box-lang')
 	const form = document.createElement('form')
@@ -478,37 +505,39 @@ const loadLocalStorage = () => {
 	inputColor.addEventListener('input', changeColor)
 }
 // PDF
-const { jsPDF } = window.jspdf;
+const { jsPDF } = window.jspdf
 function generatePDF() {
-    const element = document.querySelector('.cv-preview'); 
-    html2canvas(element, {
-        scale: 2, 
-        useCORS: true 
-    }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-            orientation: 'p',
-            unit: 'mm',
-            format: 'a4'
-        });
-        const pageWidth = pdf.internal.pageSize.getWidth(); 
-        const pageHeight = pdf.internal.pageSize.getHeight(); 
-        const imgWidth = pageWidth;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width; 
-        let yPosition = 0;      
-        if (imgHeight > pageHeight) {         
-            while (yPosition < imgHeight) {
-                pdf.addImage(imgData, 'PNG', 0, -yPosition, imgWidth, imgHeight);
-                yPosition += pageHeight;             
-                if (yPosition < imgHeight) {
-                    pdf.addPage();
-                }
-            }
-        } else {
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        }
-        pdf.save('CV.pdf');
-    }).catch(error => console.error('Błąd generowania PDF:', error));
+	const element = document.querySelector('.cv-preview')
+	html2canvas(element, {
+		scale: 2,
+		useCORS: true,
+	})
+		.then(canvas => {
+			const imgData = canvas.toDataURL('image/png')
+			const pdf = new jsPDF({
+				orientation: 'p',
+				unit: 'mm',
+				format: 'a4',
+			})
+			const pageWidth = pdf.internal.pageSize.getWidth()
+			const pageHeight = pdf.internal.pageSize.getHeight()
+			const imgWidth = pageWidth
+			const imgHeight = (canvas.height * imgWidth) / canvas.width
+			let yPosition = 0
+			if (imgHeight > pageHeight) {
+				while (yPosition < imgHeight) {
+					pdf.addImage(imgData, 'PNG', 0, -yPosition, imgWidth, imgHeight)
+					yPosition += pageHeight
+					if (yPosition < imgHeight) {
+						pdf.addPage()
+					}
+				}
+			} else {
+				pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
+			}
+			pdf.save('CV.pdf')
+		})
+		.catch(error => console.error('Błąd generowania PDF:', error))
 }
 jobBtn.addEventListener('click', createJob)
 eduBtn.addEventListener('click', createEduForm)
