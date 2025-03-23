@@ -370,9 +370,11 @@ const saveSkillsData = () => {
 	const skillsForms = document.querySelectorAll('.skills-form')
 	let skillsData = []
 	skillsForms.forEach(form => {
-		const id = form.getAttribute('data-id') || Date.now().toString()
-		const skill = form.querySelector('[name="skills"]').value
-		skillsData.push({ id, skill: skill })
+		if (validateSkillsForm(form)) {
+			const id = form.getAttribute('data-id') || Date.now().toString()
+			const skill = form.querySelector('[name="skills"]').value
+			skillsData.push({ id, skill: skill })
+		}
 	})
 	localStorage.setItem('skillsData', JSON.stringify(skillsData))
 	const previewSkills = document.querySelector('.cv-preview-skills')
@@ -386,6 +388,21 @@ const loadSkillData = () => {
 	})
 	generateUserSkills()
 }
+const validateSkillsForm = form => {
+	let isValid = true
+	const skillInput = form.querySelector('[name="skills"]')
+
+	;[skillInput].forEach(input => {
+		input.classList.remove('error')
+	})
+	if (skillInput.value.trim().length < 2) {
+		skillInput.classList.add('error')
+		isValid = false
+	}
+
+	return isValid
+}
+
 const generateUserDataAbout = () => {
 	const aboutPreviewContainer = document.querySelector('.cv-preview-about')
 	const userData = JSON.parse(localStorage.getItem('userData')) || {}
