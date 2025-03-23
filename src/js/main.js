@@ -289,11 +289,13 @@ const saveLangData = () => {
 	const langForms = document.querySelectorAll('.language-form')
 	let langData = []
 	langForms.forEach(form => {
-		const id = form.getAttribute('data-id') || Date.now().toString()
-		form.setAttribute('data-id', id)
-		const langName = form.querySelector('[name="language"]').value
-		const langLevel = form.querySelector('[name="level"]').value
-		langData.push({ id, language: langName, level: langLevel })
+		if (validateLangForm(form)) {
+			const id = form.getAttribute('data-id') || Date.now().toString()
+			form.setAttribute('data-id', id)
+			const langName = form.querySelector('[name="language"]').value
+			const langLevel = form.querySelector('[name="level"]').value
+			langData.push({ id, language: langName, level: langLevel })
+		}
 	})
 	localStorage.setItem('langData', JSON.stringify(langData))
 	const previewLang = document.querySelector('.cv-preview-lang')
@@ -307,6 +309,26 @@ const loadLangData = () => {
 	})
 	generateUserLang()
 }
+const validateLangForm = form => {
+	let isValid = true
+	const langInput = form.querySelector('[name="language"]')
+	const lvlInput = form.querySelector('[name="level"]')
+
+	;[langInput, lvlInput].forEach(input => {
+		input.classList.remove('error')
+	})
+	if (langInput.value.trim().length < 2) {
+		langInput.classList.add('error')
+		isValid = false
+	}
+	if (lvlInput.value.trim().length < 2) {
+		lvlInput.classList.add('error')
+		isValid = false
+	}
+
+	return isValid
+}
+
 const createSkills = (data = {}) => {
 	const skillsContainer = document.querySelector('.cv-box-skills')
 	const form = document.createElement('form')
