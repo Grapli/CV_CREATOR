@@ -454,6 +454,9 @@ const saveFormsDataAbout = () => {
 			}
 			reader.readAsDataURL(input.files[0])
 		} else {
+			if (input.name === 'tel') {
+				input.value = formatPhoneNumberValue(input.value)
+			}
 			userData[input.name] = input.value
 		}
 	})
@@ -474,6 +477,11 @@ document
 	.forEach(input => {
 		input.addEventListener('input', saveFormsDataAbout)
 	})
+const formatPhoneNumberValue = value => {
+	let cleaned = value.replace(/\D/g, '')
+	return cleaned.match(/.{1,3}/g)?.join('-') || ''
+}
+
 const validateUserForm = () => {
 	let isValid = true
 
@@ -485,7 +493,7 @@ const validateUserForm = () => {
 
 	if (!nameInput || !lastNameInput || !emailInput || !telInput) {
 		console.error('Nie znaleziono jednego z pól formularza.')
-		return false 
+		return false
 	}
 	;[nameInput, lastNameInput, emailInput, telInput].forEach(input => {
 		input.classList.remove('error')
@@ -504,7 +512,7 @@ const validateUserForm = () => {
 		emailInput.classList.add('error')
 		isValid = false
 	}
-	const telRegex = /^\+?\d{7,15}$/
+	const telRegex = /^\+?(\d{3}-?){2,4}\d{0,3}$$/
 	if (telInput.value.trim() && !telRegex.test(telInput.value.trim())) {
 		telInput.classList.add('error')
 		isValid = false
