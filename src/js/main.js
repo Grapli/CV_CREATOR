@@ -437,7 +437,7 @@ const generateUserDataAbout = () => {
 			: ''
 }
 const saveFormsDataAbout = () => {
-	if (!validateUserForm()) return // Zatrzymuje zapis, jeśli dane są błędne
+	if (!validateUserForm()) return
 
 	const inputs = document.querySelectorAll(
 		'[name="name"], [name="lastName"], [name="email"], [name="tel"], [name="img"]'
@@ -483,18 +483,13 @@ const validateUserForm = () => {
 	const telInput = document.querySelector('[name="tel"]')
 	const imgInput = document.querySelector('[name="img"]')
 
-	// Sprawdź, czy wszystkie pola istnieją
 	if (!nameInput || !lastNameInput || !emailInput || !telInput) {
 		console.error('Nie znaleziono jednego z pól formularza.')
-		return false // Przerwij walidację
+		return false 
 	}
-
-	// Usunięcie poprzednich błędów tylko jeśli pola istnieją
 	;[nameInput, lastNameInput, emailInput, telInput].forEach(input => {
 		input.classList.remove('error')
 	})
-
-	// Walidacja imienia i nazwiska
 	const nameRegex = /^[A-Za-zÀ-ÿ\s'-]{2,}$/
 	if (!nameRegex.test(nameInput.value.trim())) {
 		nameInput.classList.add('error')
@@ -504,22 +499,16 @@ const validateUserForm = () => {
 		lastNameInput.classList.add('error')
 		isValid = false
 	}
-
-	// Walidacja e-maila
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 	if (!emailRegex.test(emailInput.value.trim())) {
 		emailInput.classList.add('error')
 		isValid = false
 	}
-
-	// Walidacja telefonu
 	const telRegex = /^\+?\d{7,15}$/
 	if (telInput.value.trim() && !telRegex.test(telInput.value.trim())) {
 		telInput.classList.add('error')
 		isValid = false
 	}
-
-	// Walidacja obrazu
 	if (imgInput && imgInput.files.length > 0) {
 		const allowedFormats = ['image/jpeg', 'image/png', 'image/gif']
 		if (!allowedFormats.includes(imgInput.files[0].type)) {
@@ -527,10 +516,8 @@ const validateUserForm = () => {
 			isValid = false
 		}
 	}
-
 	return isValid
 }
-
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
