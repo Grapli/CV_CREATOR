@@ -437,10 +437,13 @@ const generateUserDataAbout = () => {
 			: ''
 }
 const saveFormsDataAbout = () => {
+	if (!validateUserForm()) return // Zatrzymuje zapis, jeśli dane są błędne
+
 	const inputs = document.querySelectorAll(
 		'[name="name"], [name="lastName"], [name="email"], [name="tel"], [name="img"]'
 	)
 	const userData = {}
+
 	inputs.forEach(input => {
 		if (input.name === 'img' && input.files && input.files[0]) {
 			const reader = new FileReader()
@@ -454,6 +457,7 @@ const saveFormsDataAbout = () => {
 			userData[input.name] = input.value
 		}
 	})
+
 	localStorage.setItem('userData', JSON.stringify(userData))
 	generateUserDataAbout()
 }
@@ -470,6 +474,63 @@ document
 	.forEach(input => {
 		input.addEventListener('input', saveFormsDataAbout)
 	})
+const validateUserForm = () => {
+	let isValid = true
+
+	const nameInput = document.querySelector('[name="name"]')
+	const lastNameInput = document.querySelector('[name="lastName"]')
+	const emailInput = document.querySelector('[name="email"]')
+	const telInput = document.querySelector('[name="tel"]')
+	const imgInput = document.querySelector('[name="img"]')
+
+	// Sprawdź, czy wszystkie pola istnieją
+	if (!nameInput || !lastNameInput || !emailInput || !telInput) {
+		console.error('Nie znaleziono jednego z pól formularza.')
+		return false // Przerwij walidację
+	}
+
+	// Usunięcie poprzednich błędów tylko jeśli pola istnieją
+	;[nameInput, lastNameInput, emailInput, telInput].forEach(input => {
+		input.classList.remove('error')
+	})
+
+	// Walidacja imienia i nazwiska
+	const nameRegex = /^[A-Za-zÀ-ÿ\s'-]{2,}$/
+	if (!nameRegex.test(nameInput.value.trim())) {
+		nameInput.classList.add('error')
+		isValid = false
+	}
+	if (!nameRegex.test(lastNameInput.value.trim())) {
+		lastNameInput.classList.add('error')
+		isValid = false
+	}
+
+	// Walidacja e-maila
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+	if (!emailRegex.test(emailInput.value.trim())) {
+		emailInput.classList.add('error')
+		isValid = false
+	}
+
+	// Walidacja telefonu
+	const telRegex = /^\+?\d{7,15}$/
+	if (telInput.value.trim() && !telRegex.test(telInput.value.trim())) {
+		telInput.classList.add('error')
+		isValid = false
+	}
+
+	// Walidacja obrazu
+	if (imgInput && imgInput.files.length > 0) {
+		const allowedFormats = ['image/jpeg', 'image/png', 'image/gif']
+		if (!allowedFormats.includes(imgInput.files[0].type)) {
+			alert('Niepoprawny format zdjęcia. Wybierz plik JPG, PNG lub GIF.')
+			isValid = false
+		}
+	}
+
+	return isValid
+}
+
 const generatePreview = () => {
 	generateUserDataAbout()
 	generateUserJob()
