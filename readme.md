@@ -1,5 +1,7 @@
 # CV Creator
 
+https://grapli.github.io/CV_CREATOR/
+
 ## Table of contents
 
 - [General info](#general-info)
