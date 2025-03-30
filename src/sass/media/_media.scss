@@ -1,0 +1,25 @@
+@media (min-width: 598px) {
+	.header {
+		&__title {
+			font-size: 4rem;
+		}
+		&__text {
+			font-size: 3rem;
+		}
+		
+	}
+}
+@media (min-width: 768px) {
+	.header {
+		&__title {
+			font-size: 5rem;
+		}
+		&__text {
+			font-size: 3.5rem;
+		}
+        &__btn{
+            font-size: 2rem;
+        }
+		
+	}
+}
