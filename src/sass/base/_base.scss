@@ -85,6 +85,18 @@ h3 {
 	padding-bottom: 1em;
 }
 .error {
-    border: 2px solid red;
-    background-color: #ffe6e6;
+	border: 2px solid red;
+	background-color: #ffe6e6;
+}
+
+@media (max-width: 798px) {
+	label {
+		font-size: 1.8rem;
+		margin-top: 10px;
+	}
+	input {
+		margin-top: 10px;
+		height: 2em;
+		font-size: 1.5rem;
+	}
 }
